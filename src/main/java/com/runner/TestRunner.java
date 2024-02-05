@@ -1,11 +1,12 @@
-package runner;
+package com.runner;
 
+import com.context.SessionContext;
+import com.context.TestExecutionContext;
 import io.cucumber.core.cli.Main;
 
 public class TestRunner {
 
     public TestRunner(){
-
         run();
     }
 
@@ -15,15 +16,10 @@ public class TestRunner {
                             "--plugin", "pretty",
                             "--plugin", "html:target/cucumber.html",
                             "--threads", "1",
+                            "--plugin", "com.listeners.CucumberPlatformScenarioListener",
                             "--glue", "com.steps",
-                            "src/test/resources/features"};
+                            "src/main/resources/features"};
         System.out.println("Inside Run -- ");
         byte status = Main.run(array);
-    }
-
-    public static void main(String[] args){
-
-        System.out.println("Running Main Method  -> ");
-        new TestRunner();
     }
 }
