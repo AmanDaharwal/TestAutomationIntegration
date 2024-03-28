@@ -1,0 +1,32 @@
+package com.tests.screens;
+
+import com.exceptions.NotImplementedException;
+import com.exceptions.TestExecutionFailedException;
+import com.runner.Drivers;
+import com.runner.TestRunner;
+import com.tests.screens.web.ProductsScreenWeb;
+import org.openqa.selenium.WebDriver;
+
+public abstract class ProductsScreen {
+
+    private final String SCREEN_NAME = ProductsScreen.class.getSimpleName();
+
+    public ProductsScreen get() {
+
+        WebDriver driver = Drivers.getInnerDriver();
+        String platform = TestRunner.getPlatform();
+        switch (platform) {
+            case "web":
+                return new ProductsScreenWeb(driver);
+        }
+        throw new NotImplementedException(SCREEN_NAME + " is not implemented for platform " + platform);
+    }
+
+    public abstract String getPageTitle();
+
+    public abstract ProductsScreen addProductToCart(int index);
+
+    public abstract CartScreen goToCart();
+
+
+}

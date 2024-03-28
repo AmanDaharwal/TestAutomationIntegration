@@ -10,7 +10,8 @@ public class LoginScreenWeb extends LoginScreen {
     private final By byPasswordTxtBoxId = By.id("password");
     private final By byLoginBtnId = By.id("login-button");
     private WebDriver driver;
-    public LoginScreenWeb(WebDriver driver){
+
+    public LoginScreenWeb(WebDriver driver) {
         this.driver = driver;
     }
 
