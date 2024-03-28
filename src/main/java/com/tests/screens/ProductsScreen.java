@@ -9,9 +9,9 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class ProductsScreen {
 
-    private final String SCREEN_NAME = ProductsScreen.class.getSimpleName();
+    private static final String SCREEN_NAME = ProductsScreen.class.getSimpleName();
 
-    public ProductsScreen get() {
+    public static ProductsScreen get() {
 
         WebDriver driver = Drivers.getInnerDriver();
         String platform = TestRunner.getPlatform();
@@ -24,7 +24,7 @@ public abstract class ProductsScreen {
 
     public abstract String getPageTitle();
 
-    public abstract ProductsScreen addProductToCart(int index);
+    public abstract ProductsScreen addProductToCart(int numberOfItems);
 
     public abstract CartScreen goToCart();
 

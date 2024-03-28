@@ -1,27 +1,42 @@
 package com.tests.bl;
 
-import com.tests.screens.LoginScreen;
+import com.tests.screens.*;
 
 public class SwagLabBL {
 
-
     public SwagLabBL addItemsInCart() {
-        return null;
+        ProductsScreen.get().addProductToCart(2).goToCart();
+        return this;
     }
 
     public SwagLabBL addCheckoutInformation() {
-        return null;
+        CheckOutInformationScreen.get().enterFirstName("test")
+                .enterLastName("test").enterPinCode("400000").clickContinue();
+        return this;
     }
 
     public SwagLabBL verifyCheckoutOverview() {
-        return null;
+        CheckOutOverviewScreen checkOutOverviewScreen = CheckOutOverviewScreen.get();
+        checkOutOverviewScreen.getNumberOfCartItems(); // assert here
+
+        checkOutOverviewScreen.clickFinish();
+        return this;
     }
 
     public SwagLabBL placeOrder() {
-        return null;
+        FinishScreen.get().isOrderSuccessful(); // assert here
+        return this;
     }
 
-    public LoginScreen login(String username, String password) {
-        return LoginScreen.get().loginToSwagLab(username, password);
+    public SwagLabBL login(String username, String password) {
+        LoginScreen.get().loginToSwagLab(username, password);
+        return this;
+    }
+
+    public SwagLabBL verifyItemsInCart() {
+        CartScreen cartScreen = CartScreen.get();
+        cartScreen.getNumberOfCartItems(); // assert here
+        cartScreen.clickCheckout();
+        return this;
     }
 }

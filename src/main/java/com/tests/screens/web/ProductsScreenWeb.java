@@ -23,8 +23,8 @@ public class ProductsScreenWeb extends ProductsScreen {
     }
 
     @Override
-    public ProductsScreen addProductToCart(int index) {
-        driver.findElement(By.xpath(String.format(inventoryItemsXpath, index)));
+    public ProductsScreen addProductToCart(int numberOfItems) {
+        driver.findElement(By.xpath(String.format(inventoryItemsXpath, numberOfItems)));
         return this;
     }
 

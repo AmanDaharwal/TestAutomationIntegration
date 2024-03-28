@@ -1,17 +1,17 @@
 package com.tests.screens.web;
 
-import com.tests.screens.CartScreen;
 import com.tests.screens.CheckOutOverviewScreen;
+import com.tests.screens.FinishScreen;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class CartScreenWeb extends CartScreen {
-
+public class CheckOutOverviewScreenWeb extends CheckOutOverviewScreen {
     private WebDriver driver;
     private By byListOfCartItemClass = By.className("cart_item");
-    private By byCheckoutBtnXpath = By.xpath("//a[contains(@class,\"checkout_button\")]");
+    private By byFinishBtnXpath = By.xpath("//a[contains(@class,\"cart_button\")]");
 
-    public CartScreenWeb(WebDriver driver) {
+
+    public CheckOutOverviewScreenWeb(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -21,8 +21,8 @@ public class CartScreenWeb extends CartScreen {
     }
 
     @Override
-    public CheckOutOverviewScreen clickCheckout() {
-        driver.findElement(byCheckoutBtnXpath).click();
-        return CheckOutOverviewScreen.get();
+    public FinishScreen clickFinish() {
+        driver.findElement(byFinishBtnXpath).click();
+        return FinishScreen.get();
     }
 }

@@ -17,6 +17,7 @@ public class SwagLabTestSteps {
     @When("I shop for multiple items")
     public void iShopForMultipleItems() {
         new SwagLabBL().addItemsInCart()
+                .verifyItemsInCart()
                 .addCheckoutInformation()
                 .verifyCheckoutOverview();
     }
