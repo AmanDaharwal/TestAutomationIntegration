@@ -1,0 +1,5 @@
+{
+  "prod" : {
+    "INDIGO_BASE_URL": "https://www.goindigo.in/"
+  }
+}
