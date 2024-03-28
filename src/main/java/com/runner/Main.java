@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args){
         System.out.println("Running Main Method  -> ");
-        new TestRunner();
+        new TestRunner(args);
     }
 
     public static TestExecutionContext getTestExecutionContext(long threadId){
