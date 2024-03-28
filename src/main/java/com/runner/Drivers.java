@@ -13,6 +13,10 @@ public class Drivers {
 
     public static WebDriver driver;
 
+    private Drivers(){
+
+    }
+
     public static WebDriver createDriverFor(){
         return createDriverFor(TestRunner.getPlatform());
     }
