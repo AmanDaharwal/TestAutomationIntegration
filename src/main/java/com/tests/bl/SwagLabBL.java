@@ -1,17 +1,24 @@
 package com.tests.bl;
 
+import com.context.SessionContext;
+import com.context.TestExecutionContext;
+import com.entities.SWAGLAB_TEST_CONTEXT;
 import com.tests.screens.*;
 
 public class SwagLabBL {
 
-    public SwagLabBL addItemsInCart() {
-        ProductsScreen.get().addProductToCart(2).goToCart();
+    TestExecutionContext testExecutionContext = SessionContext.getTestExecutionContext(Thread.currentThread().getId());
+
+    public SwagLabBL addItemsInCart(int numberOfItems) {
+        ProductsScreen.get().addProductToCart(numberOfItems).goToCart();
         return this;
     }
 
     public SwagLabBL addCheckoutInformation() {
-        CheckOutInformationScreen.get().enterFirstName("test")
-                .enterLastName("test").enterPinCode("400000").clickContinue();
+        CheckOutInformationScreen.get()
+                .enterFirstName(testExecutionContext.getTestStateAsString(SWAGLAB_TEST_CONTEXT.FIRST_NAME))
+                .enterLastName(testExecutionContext.getTestStateAsString(SWAGLAB_TEST_CONTEXT.LAST_NAME))
+                .enterPinCode(testExecutionContext.getTestStateAsString(SWAGLAB_TEST_CONTEXT.PIN_CODE)).clickContinue();
         return this;
     }
 
