@@ -18,7 +18,6 @@ public class TestRunner {
         String configFilePath = args[0], tags = args[1];
         platform = args[2];
         Setup.load(configFilePath);
-        Setup.setConfigProperties();
         run(tags);
     }
 
@@ -32,7 +31,14 @@ public class TestRunner {
                             "--glue", "com.tests.steps",
                             "src/main/resources/features"};
         System.out.println("Inside Run -- ");
-        byte status = Main.run(array);
+        try {
+            byte status = Main.run(array);
+            System.exit(status);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            System.exit(1);
+        }
     }
 
     static String getURL(){
