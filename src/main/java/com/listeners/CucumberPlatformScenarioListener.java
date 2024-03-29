@@ -1,6 +1,7 @@
 package com.listeners;
 
 import com.context.TestExecutionContext;
+import com.runner.Drivers;
 import io.cucumber.plugin.ConcurrentEventListener;
 import io.cucumber.plugin.event.*;
 
@@ -31,6 +32,7 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
 
     private void testCaseFinishedHandler(TestCaseFinished event){
         System.out.println("testCaseFinishedHandler");
+        Drivers.closeBrowser();
     }
 
     private void testRunFinishedHandler(TestRunFinished event){
