@@ -1,4 +1,5 @@
 # TestAutomationIntegration
 
 To run a main method
-mvn compile exec:java -Dexec.mainClass="com.runner.Main" -Dexec.args="./config/indigo.properties @swaglab web"
+chmod +x run.sh
+./runTests.sh configFilePath=./config/swaglab.properties Tag=@swaglab Platform=web
