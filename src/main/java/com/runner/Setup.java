@@ -17,6 +17,8 @@ public class Setup {
     private static Map<String, Object> configMap = new LinkedHashMap<>();
     private final static String BROWSER = "BROWSER";
     private final static String URL = "URL";
+    private final static String TEST_DATA = "TEST_DATA";
+
     private Setup(){
 
     }
@@ -24,6 +26,8 @@ public class Setup {
     static void load(String providedConfigFilePath) {
         configFilePath = providedConfigFilePath;
         properties = loadProperties(configFilePath);
+        setConfigProperties();
+        loadTestData();
     }
 
     @NotNull
@@ -41,6 +45,7 @@ public class Setup {
     static void setConfigProperties(){
         configMap.put(BROWSER, properties.get(BROWSER));
         configMap.put(URL, properties.get(URL));
+        configMap.put(TEST_DATA, properties.get(TEST_DATA));
     }
 
     public static String getURL() {
@@ -51,5 +56,9 @@ public class Setup {
         if(configMap.containsKey(property.toUpperCase()))
             return (String) configMap.get(property.toUpperCase());
         throw new TestExecutionFailedException(property+" does not exist in config file");
+    }
+
+    public static void loadTestData(){
+        TestData.loadTestData((String) configMap.get(TEST_DATA));
     }
 }
