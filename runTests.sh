@@ -1,5 +1,6 @@
 #!/bin/bash
 
+outputDir=$(./setupOutputDirectory.sh)
 configFilePath=""
 tag=""
 platform=""
@@ -29,4 +30,4 @@ if [ -z "$configFilePath" ] || [ -z "$tag" ] || [ -z "$platform" ]; then
 fi
 
 # Call Maven with the constructed arguments
-mvn compile exec:java -Dexec.mainClass="com.runner.Main" -Dexec.args="$configFilePath $tag $platform"
+mvn compile exec:java -Dexec.mainClass="com.runner.Main" -Dexec.args="$configFilePath $tag $platform $outputDir"
