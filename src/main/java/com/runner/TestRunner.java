@@ -1,14 +1,13 @@
 package com.runner;
 
-import com.context.SessionContext;
-import com.context.TestExecutionContext;
 import com.exceptions.InvalidTestDataException;
 import io.cucumber.core.cli.Main;
-
-import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TestRunner {
 
+    public static final Logger logger = LogManager.getLogger(TestRunner.class);
     private static String platform = "";
 
     public TestRunner(){
@@ -17,6 +16,7 @@ public class TestRunner {
     public TestRunner(String[] args){
         String configFilePath = args[0], tags = args[1];
         platform = args[2];
+        logger.info("Running tests for platform "+platform+" with configuration in "+configFilePath);
         Setup.load(configFilePath);
         run(tags);
     }
@@ -30,7 +30,6 @@ public class TestRunner {
                             "--plugin", "com.listeners.CucumberPlatformScenarioListener",
                             "--glue", "com.tests.steps",
                             "src/main/resources/features"};
-        System.out.println("Inside Run -- ");
         try {
             byte status = Main.run(array);
             System.exit(status);
