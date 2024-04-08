@@ -13,7 +13,7 @@ public abstract class ProductsScreen {
 
     public static ProductsScreen get() {
 
-        WebDriver driver = Drivers.getInnerDriver();
+        WebDriver driver = Drivers.getInnerDriver(Thread.currentThread().getId());
         String platform = TestRunner.getPlatform();
         switch (platform) {
             case "web":
