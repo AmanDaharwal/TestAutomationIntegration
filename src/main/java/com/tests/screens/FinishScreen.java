@@ -12,7 +12,7 @@ public abstract class FinishScreen {
 
     public static FinishScreen get() {
         String platform = TestRunner.getPlatform();
-        WebDriver driver = Drivers.getInnerDriver();
+        WebDriver driver = Drivers.getInnerDriver(Thread.currentThread().getId());
 
         switch (platform) {
             case "web":

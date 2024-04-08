@@ -12,7 +12,7 @@ public abstract class LoginScreen {
 
     public static LoginScreen get() {
 
-        WebDriver driver = Drivers.getInnerDriver();
+        WebDriver driver = Drivers.getInnerDriver(Thread.currentThread().getId());
         String platform = TestRunner.getPlatform();
 
         switch (platform) {
