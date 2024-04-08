@@ -1,5 +1,6 @@
 package com.runner;
 
+import com.context.TestExecutionContext;
 import com.exceptions.InvalidTestDataException;
 import io.cucumber.core.cli.Main;
 import org.apache.logging.log4j.LogManager;
@@ -7,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 public class TestRunner {
 
-    public static final Logger logger = LogManager.getLogger(TestRunner.class);
+    public static final Logger LOGGER = LogManager.getLogger(TestRunner.class);
     private static String platform = "";
 
     public TestRunner(){
@@ -16,7 +17,7 @@ public class TestRunner {
     public TestRunner(String[] args){
         String configFilePath = args[0], tags = args[1];
         platform = args[2];
-        logger.info("Running tests for platform "+platform+" with configuration in "+configFilePath);
+        LOGGER.info("Running tests for platform "+platform+" with configuration in "+configFilePath);
         Setup.load(configFilePath);
         run(tags);
     }
@@ -26,7 +27,7 @@ public class TestRunner {
         String[] array = { "--tags", tags,
                             "--plugin", "pretty",
                             "--plugin", "html:target/cucumber.html",
-                            "--threads", "1",
+                            "--threads", "2",
                             "--plugin", "com.listeners.CucumberPlatformScenarioListener",
                             "--glue", "com.tests.steps",
                             "src/main/resources/features"};
@@ -50,5 +51,9 @@ public class TestRunner {
 
     public static String getConfig(String property){
         return Setup.getConfig(property);
+    }
+
+    public static TestExecutionContext getTestExecutionContext(long threadId) {
+        return com.runner.Main.getTestExecutionContext(threadId);
     }
 }
