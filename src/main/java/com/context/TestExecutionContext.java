@@ -5,7 +5,6 @@ import java.util.HashMap;
 public class TestExecutionContext {
 
     private final String testName;
-
     private final HashMap<String, Object> testExecutionState;
 
     public TestExecutionContext(String testName){
