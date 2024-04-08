@@ -6,20 +6,28 @@ import com.entities.SWAGLAB_TEST_CONTEXT;
 
 import com.runner.Drivers;
 import com.runner.TestData;
+import com.runner.TestRunner;
 import com.tests.bl.SwagLabBL;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SwagLabTestSteps {
 
-    TestExecutionContext testExecutionContext = SessionContext.getTestExecutionContext(Thread.currentThread().getId());
+    private static final Logger LOGGER = LogManager.getLogger(SwagLabTestSteps.class.getName());
+    private final TestExecutionContext testExecutionContext;
+
+    public SwagLabTestSteps(){
+        testExecutionContext = TestRunner.getTestExecutionContext(Thread.currentThread().getId());
+    }
 
     @Given("I launch swag lab application")
     public void iLaunchSwagLabApplication() {
-        Drivers.createDriverFor();
-        Drivers.launchUrl();
+        Drivers.createDriverFor(testExecutionContext);
+        Drivers.launchUrl(testExecutionContext);
     }
 
     @When("I shop for multiple items")
