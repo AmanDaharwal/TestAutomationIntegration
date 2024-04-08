@@ -5,6 +5,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.context.SessionContext;
 import com.context.TestExecutionContext;
+import com.entities.TEST_CONTEXT;
 import com.runner.Drivers;
 import io.cucumber.plugin.ConcurrentEventListener;
 import com.aventstack.extentreports.Status;
@@ -20,7 +21,6 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
     private final static Logger LOGGER = LogManager.getLogger(CucumberPlatformScenarioListener.class);
     private ExtentReports extentReports;
     private ExtentSparkReporter extentSparkReporter;
-    private ExtentTest extentTest;
     private final Map<String, Integer> scenarioRunCounts = new HashMap<>();
 
     public CucumberPlatformScenarioListener() {
@@ -50,7 +50,8 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
         LOGGER.info("Test Case Started - " + testCaseName);
         TestExecutionContext testExecutionContext = new TestExecutionContext(
                 scenarioRunCount + "-" + testCaseName);
-        extentTest = extentReports.createTest(testCaseName);
+        ExtentTest extentTest = extentReports.createTest(testCaseName);
+        testExecutionContext.addTestState(TEST_CONTEXT.EXTEND_TEST, extentTest);
         LOGGER.info(testExecutionContext.getTestName());
     }
 
@@ -64,6 +65,7 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
             status = Status.FAIL;
         }
         LOGGER.info(status + "Test Case Finished: " + testCaseName);
+        ExtentTest extentTest = (ExtentTest) context.getTestState(TEST_CONTEXT.EXTEND_TEST);
         extentTest.log(status, "Test Case Finished: " + testCaseName);
         SessionContext.removeContext(threadId);
     }
