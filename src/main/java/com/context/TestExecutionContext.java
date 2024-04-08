@@ -11,7 +11,6 @@ public class TestExecutionContext {
         SessionContext.addContext(Thread.currentThread().getId(), this);
         this.testName = testName;
         this.testExecutionState = new HashMap<>();
-        System.out.println("Inside TestExecution Context Constructor");
     }
 
     public String getTestName(){
