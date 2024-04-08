@@ -12,7 +12,7 @@ public abstract class CheckOutInformationScreen {
 
     public static CheckOutInformationScreen get() {
 
-        WebDriver driver = Drivers.getInnerDriver();
+        WebDriver driver = Drivers.getInnerDriver(Thread.currentThread().getId());
         String platform = TestRunner.getPlatform();
         switch (platform) {
             case "web":
