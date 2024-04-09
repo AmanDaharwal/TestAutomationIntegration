@@ -1,6 +1,5 @@
 package com.tests.steps;
 
-import com.context.SessionContext;
 import com.context.TestExecutionContext;
 import com.entities.SWAGLAB_TEST_CONTEXT;
 

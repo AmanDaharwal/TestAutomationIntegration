@@ -1,7 +1,6 @@
 package com.tests.screens;
 
 import com.exceptions.NotImplementedException;
-import com.exceptions.TestExecutionFailedException;
 import com.runner.Drivers;
 import com.runner.TestRunner;
 import com.tests.screens.web.LoginScreenWeb;

@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class CucumberPlatformScenarioListener implements ConcurrentEventListener {
     private final static Logger LOGGER = LogManager.getLogger(CucumberPlatformScenarioListener.class);
-    private ExtendTestReporter extendTestReporter;
+    private final ExtendTestReporter extendTestReporter;
     private final Map<String, Integer> scenarioRunCounts = new HashMap<>();
 
     public CucumberPlatformScenarioListener() {

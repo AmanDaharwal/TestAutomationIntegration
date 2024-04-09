@@ -8,7 +8,7 @@ import com.entities.TEST_CONTEXT;
 
 public class ExtendTestReporter {
     private static ExtendTestReporter extendTestReporter;
-    private ExtentReports extentReports;
+    private final ExtentReports extentReports;
     private ExtentSparkReporter extentSparkReporter;
 
     private ExtendTestReporter() {
