@@ -7,6 +7,8 @@ import com.tests.screens.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static org.assertj.core.api.Assertions.*;
+
 public class SwagLabBL {
     private final static Logger logger = LogManager.getLogger(SwagLabBL.class);
 
@@ -26,18 +28,19 @@ public class SwagLabBL {
         return this;
     }
 
-    public SwagLabBL verifyCheckoutOverview() {
+    public SwagLabBL verifyCheckoutOverview(int numberOfItems) {
         logger.info("Verify Checkout Overview");
         CheckOutOverviewScreen checkOutOverviewScreen = CheckOutOverviewScreen.get();
-        checkOutOverviewScreen.getNumberOfCartItems(); // assert here
-
+        assertThat(checkOutOverviewScreen.getNumberOfCartItems())
+                .as("Mismatch in number of items added in checkout overview").isEqualTo(numberOfItems);
         checkOutOverviewScreen.clickFinish();
         return this;
     }
 
     public SwagLabBL placeOrder() {
         logger.info("Place and Verify Order");
-        FinishScreen.get().isOrderSuccessful(); // assert here
+        assertThat(FinishScreen.get().isOrderSuccessful())
+                .as("Order is not Successful").isTrue();
         return this;
     }
 
@@ -47,10 +50,11 @@ public class SwagLabBL {
         return this;
     }
 
-    public SwagLabBL verifyItemsInCart() {
+    public SwagLabBL verifyItemsInCart(int numberOfItems) {
         logger.info("Verify Items in cart");
         CartScreen cartScreen = CartScreen.get();
-        cartScreen.getNumberOfCartItems(); // assert here
+        assertThat(cartScreen.getNumberOfCartItems())
+                .as("Mismatch in number of items added in cart").isEqualTo(numberOfItems);
         cartScreen.clickCheckout();
         return this;
     }

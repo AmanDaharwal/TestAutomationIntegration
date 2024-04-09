@@ -37,9 +37,9 @@ public class SwagLabTestSteps {
         testExecutionContext.addTestState(SWAGLAB_TEST_CONTEXT.LAST_NAME, TestData.getTestDataAsString(SWAGLAB_TEST_CONTEXT.LAST_NAME));
         testExecutionContext.addTestState(SWAGLAB_TEST_CONTEXT.PIN_CODE, TestData.getTestDataAsString(SWAGLAB_TEST_CONTEXT.PIN_CODE));
         new SwagLabBL().addItemsInCart(numberOfItems)
-                .verifyItemsInCart()
+                .verifyItemsInCart(numberOfItems)
                 .addCheckoutInformation()
-                .verifyCheckoutOverview();
+                .verifyCheckoutOverview(numberOfItems);
     }
 
     @Then("I should able to place order successfully")
