@@ -4,6 +4,7 @@ import com.context.SessionContext;
 import com.context.TestExecutionContext;
 import com.exceptions.InvalidTestDataException;
 import com.exceptions.TestExecutionFailedException;
+import com.utils.DateTime;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 
@@ -16,18 +17,22 @@ import java.nio.file.Paths;
 public class Main {
     private final static String LOG_PROPERTIES_FILE = "./src/main/resources/log4j2.properties";
 
-    private Main() {
-
-    }
+    private Main() {}
 
     public static void main(String[] args) {
-        String outputDirectoryPath = args[3];
+        String outputDirectoryPath = "";
+        if(args.length > 3) {
+            outputDirectoryPath = args[3];
+        }
+        else{
+            outputDirectoryPath = "./target/" + DateTime.getMonth() + "/" + DateTime.getCurrentDatestamp() + "/" + DateTime.getCurrentTimestamp();
+        }
         createOutputDirectory(outputDirectoryPath);
         setLogPropertiesFile();
         new TestRunner(args);
     }
 
-    public static TestExecutionContext getTestExecutionContext(long threadId) {
+    static TestExecutionContext getTestExecutionContext(long threadId) {
         return SessionContext.getTestExecutionContext(threadId);
     }
 
