@@ -3,8 +3,15 @@ package com.reporters;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.ViewName;
 import com.context.TestExecutionContext;
 import com.entities.TEST_CONTEXT;
+import com.exceptions.TestExecutionFailedException;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class ExtendTestReporter {
     private static ExtendTestReporter extendTestReporter;
@@ -23,7 +30,17 @@ public class ExtendTestReporter {
     }
 
     public void loadReporter(String pathOfOutputDirectory) {
+        Path extendReportConfigPath = Paths.get("src/main/resources/extend_report_config.json");
         extentSparkReporter = new ExtentSparkReporter(pathOfOutputDirectory + "/ExtendReport/ExtendReport.html");
+        extentSparkReporter.viewConfigurer().viewOrder()
+                .as(new ViewName[]{ViewName.DASHBOARD, ViewName.TEST})
+                .apply();
+        try {
+            extentSparkReporter.loadJSONConfig(new File(String.valueOf(extendReportConfigPath)));
+        } catch (IOException e) {
+            throw new TestExecutionFailedException("Unable to load extend report config file at "
+                    + extendReportConfigPath);
+        }
         extentReports.attachReporter(extentSparkReporter);
     }
 
