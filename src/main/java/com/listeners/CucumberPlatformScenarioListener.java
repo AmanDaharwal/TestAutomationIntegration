@@ -2,6 +2,7 @@ package com.listeners;
 
 import com.context.SessionContext;
 import com.context.TestExecutionContext;
+import com.reporters.ExtendTestLogger;
 import com.reporters.ExtendTestReporter;
 import com.runner.Drivers;
 import io.cucumber.plugin.ConcurrentEventListener;
@@ -17,6 +18,7 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
     private final static Logger LOGGER = LogManager.getLogger(CucumberPlatformScenarioListener.class);
     private final ExtendTestReporter extendTestReporter;
     private final Map<String, Integer> scenarioRunCounts = new HashMap<>();
+    private final String pathOfOutputDirectory = System.getProperty("OUTPUT_DIRECTORY");
 
     public CucumberPlatformScenarioListener() {
         LOGGER.info("CucumberPlatformScenarioListener");
@@ -34,7 +36,6 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
 
     private void testRunStartedHandler(TestRunStarted event) {
         LOGGER.info("Test Run Started");
-        String pathOfOutputDirectory = System.getProperty("OUTPUT_DIRECTORY");
         extendTestReporter.loadReporter(pathOfOutputDirectory);
     }
 
@@ -56,6 +57,7 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
         Status status = Status.PASS;
         if (!event.getResult().getStatus().isOk()) {
             status = Status.FAIL;
+            ExtendTestLogger.logFailMessage(event.getResult().toString());
         }
         LOGGER.info(status + "Test Case Finished: " + testCaseName);
         extendTestReporter.logTestExecutionStatus(status, testCaseName);
@@ -65,6 +67,8 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
     private void testRunFinishedHandler(TestRunFinished event) {
         extendTestReporter.writeReport();
         LOGGER.info("Test Run Finished Handler");
+        LOGGER.info("Test Report Generated at : " +
+                "file://"+ pathOfOutputDirectory.substring(2) + extendTestReporter.getExtentReportPath()); // fix to make link
     }
 
     private Integer getScenarioRunCount(String scenarioName) {

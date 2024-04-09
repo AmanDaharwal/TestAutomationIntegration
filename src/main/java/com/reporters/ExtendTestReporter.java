@@ -17,9 +17,11 @@ public class ExtendTestReporter {
     private static ExtendTestReporter extendTestReporter;
     private final ExtentReports extentReports;
     private ExtentSparkReporter extentSparkReporter;
+    private final String extentReportDirAndName;
 
     private ExtendTestReporter() {
         extentReports = new ExtentReports();
+        extentReportDirAndName = "ExtendReport/ExtendReport.html";
     }
 
     public static ExtendTestReporter getExtendTestReporter() {
@@ -31,7 +33,7 @@ public class ExtendTestReporter {
 
     public void loadReporter(String pathOfOutputDirectory) {
         Path extendReportConfigPath = Paths.get("src/main/resources/extend_report_config.json");
-        extentSparkReporter = new ExtentSparkReporter(pathOfOutputDirectory + "/ExtendReport/ExtendReport.html");
+        extentSparkReporter = new ExtentSparkReporter(pathOfOutputDirectory + extentReportDirAndName);
         extentSparkReporter.viewConfigurer().viewOrder()
                 .as(new ViewName[]{ViewName.DASHBOARD, ViewName.TEST})
                 .apply();
@@ -54,5 +56,9 @@ public class ExtendTestReporter {
 
     public void writeReport() {
         extentReports.flush();
+    }
+
+    public String getExtentReportPath(){
+        return extentReportDirAndName;
     }
 }

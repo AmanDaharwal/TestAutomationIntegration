@@ -13,6 +13,7 @@ public class ExtendTestLogger {
     public static void logInfoMessage(String message) {
         LOGGER.info(message);
         getExtendTest().info(message);
+
     }
 
     public static void logWarningMessage(String message) {
@@ -20,11 +21,15 @@ public class ExtendTestLogger {
         getExtendTest().warning(message);
     }
 
+    public static void logFailMessage(String message) {
+        getExtendTest().fail(message);
+    }
+
     static void logStatusMessage(Status status, String message) {
         getExtendTest().log(status, message);
     }
 
-    private static ExtentTest getExtendTest(){
-        return ((ExtentTest)(TestRunner.getTestExecutionContext(Thread.currentThread().getId()).getTestState(TEST_CONTEXT.EXTEND_TEST)));
+    private static ExtentTest getExtendTest() {
+        return ((ExtentTest) (TestRunner.getTestExecutionContext(Thread.currentThread().getId()).getTestState(TEST_CONTEXT.EXTEND_TEST)));
     }
 }
