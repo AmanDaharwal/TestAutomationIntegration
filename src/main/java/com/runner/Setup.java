@@ -22,7 +22,7 @@ final class Setup {
     private final static String BROWSER = "BROWSER";
     private final static String URL = "URL";
     private final static String TEST_DATA = "TEST_DATA";
-    private final static String LOG_PROPERTIES_FILE = "LOG_PROPERTIES_FILE";
+    private final static String PARALLEL = "PARALLEL";
 
     private Setup() {
 
@@ -51,6 +51,7 @@ final class Setup {
         configMap.put(BROWSER, properties.get(BROWSER));
         configMap.put(URL, properties.get(URL));
         configMap.put(TEST_DATA, properties.get(TEST_DATA));
+        configMap.put(PARALLEL, properties.get(PARALLEL));
         logger.info(configMap);
     }
 

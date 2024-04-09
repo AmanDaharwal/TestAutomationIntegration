@@ -1,6 +1,7 @@
 package com.runner;
 
 import com.context.TestExecutionContext;
+import com.entities.TEST_CONTEXT;
 import com.exceptions.InvalidTestDataException;
 import io.cucumber.core.cli.Main;
 import org.apache.logging.log4j.LogManager;
@@ -11,45 +12,49 @@ public class TestRunner {
     public static final Logger LOGGER = LogManager.getLogger(TestRunner.class);
     private static String platform = "";
 
-    public TestRunner(){
+    public TestRunner() {
         throw new InvalidTestDataException("Required args not provided to Runner");
     }
-    public TestRunner(String[] args){
+
+    public TestRunner(String[] args) {
         String configFilePath = args[0], tags = args[1];
         platform = args[2];
-        LOGGER.info("Running tests for platform "+platform+" with configuration in "+configFilePath);
+        LOGGER.info("Running tests for platform " + platform + " with configuration in " + configFilePath);
         Setup.load(configFilePath);
         run(tags);
     }
 
     private void run(String tags) {
 
-        String[] array = { "--tags", tags,
-                            "--plugin", "pretty",
-                            "--plugin", "html:target/cucumber.html",
-                            "--threads", "2",
-                            "--plugin", "com.listeners.CucumberPlatformScenarioListener",
-                            "--glue", "com.tests.steps",
-                            "src/main/resources/features"};
+        String cucumberReportDirectory = System.getProperty("OUTPUT_DIRECTORY") + "/CucumberReports";
+
+        String[] array = {"--tags", tags,
+                "--plugin", "pretty",
+                "--plugin", "html:" + cucumberReportDirectory + "/cucumber-html-report.html",
+                "--plugin", "json:" + cucumberReportDirectory + "/cucumber.json",
+                "--plugin", "junit:" + cucumberReportDirectory + "/cucumber.xml",
+                "--threads", Setup.getConfig(TEST_CONTEXT.PARALLEL),
+                "--plugin", "com.listeners.CucumberPlatformScenarioListener",
+                "--glue", "com.tests.steps",
+                "src/main/resources/features"};
         try {
             byte status = Main.run(array);
             System.exit(status);
-        }
-        catch (Exception e){
-            System.out.println(e);
+        } catch (Exception e) {
+            LOGGER.error(e);
             System.exit(1);
         }
     }
 
-    static String getURL(){
+    static String getURL() {
         return Setup.getURL();
     }
 
-    public static String getPlatform(){
+    public static String getPlatform() {
         return platform;
     }
 
-    public static String getConfig(String property){
+    public static String getConfig(String property) {
         return Setup.getConfig(property);
     }
 
