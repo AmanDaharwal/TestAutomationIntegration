@@ -67,8 +67,11 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
     private void testRunFinishedHandler(TestRunFinished event) {
         extendTestReporter.writeReport();
         LOGGER.info("Test Run Finished Handler");
-        LOGGER.info("Test Report Generated at : " +
-                "file://"+ pathOfOutputDirectory.substring(2) + extendTestReporter.getExtentReportPath()); // fix to make link
+        LOGGER.info(System.getProperty("user.dir"));
+        LOGGER.info("Test Report Available at : " +
+                "file://" + System.getProperty("user.dir") + "//"
+                + pathOfOutputDirectory.substring(2)
+                + extendTestReporter.getExtentReportPath());
     }
 
     private Integer getScenarioRunCount(String scenarioName) {
