@@ -15,6 +15,6 @@ public class FinishScreenWeb extends FinishScreen {
     @Override
     public boolean isOrderSuccessful() {
         String orderSuccessfulText = "THANK YOU FOR YOUR ORDER";
-        return driver.findElement(byCompleteOrderTxtClass).equals(orderSuccessfulText);
+        return driver.findElement(byCompleteOrderTxtClass).getText().equalsIgnoreCase(orderSuccessfulText);
     }
 }

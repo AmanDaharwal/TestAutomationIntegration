@@ -24,7 +24,12 @@ public class ProductsScreenWeb extends ProductsScreen {
 
     @Override
     public ProductsScreen addProductToCart(int numberOfItems) {
-        driver.findElement(By.xpath(String.format(inventoryItemsXpath, numberOfItems)));
+        int count = 1;
+
+        while( count <= numberOfItems) {
+            driver.findElement(By.xpath(String.format(inventoryItemsXpath, count))).click();
+            count++;
+        }
         return this;
     }
 
