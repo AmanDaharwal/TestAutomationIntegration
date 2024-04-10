@@ -12,11 +12,11 @@ public class TestRunner {
     public static final Logger LOGGER = LogManager.getLogger(TestRunner.class);
     private static String platform = "";
 
-    public TestRunner() {
+    TestRunner() {
         throw new InvalidTestDataException("Required args not provided to Runner");
     }
 
-    public TestRunner(String[] args) {
+    TestRunner(String[] args) {
         String configFilePath = args[0], tags = args[1];
         platform = args[2];
         LOGGER.info("Running tests for platform " + platform + " with configuration in " + configFilePath);
