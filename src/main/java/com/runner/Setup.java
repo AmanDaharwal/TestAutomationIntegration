@@ -23,6 +23,7 @@ final class Setup {
     private final static String URL = "URL";
     private final static String TEST_DATA = "TEST_DATA";
     private final static String PARALLEL = "PARALLEL";
+    private final static String CAPTURE_LOGS = "CAPTURE_LOGS";
 
     private Setup() {
 
@@ -52,6 +53,7 @@ final class Setup {
         configMap.put(URL, properties.get(URL));
         configMap.put(TEST_DATA, properties.get(TEST_DATA));
         configMap.put(PARALLEL, properties.get(PARALLEL));
+        configMap.put(CAPTURE_LOGS, properties.get(CAPTURE_LOGS));
         logger.info(configMap);
     }
 
