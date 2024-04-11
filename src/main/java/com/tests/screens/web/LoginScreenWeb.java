@@ -11,7 +11,7 @@ public class LoginScreenWeb extends LoginScreen {
     private final By byUsernameTxtBoxId = By.id("user-name");
     private final By byPasswordTxtBoxId = By.id("password");
     private final By byLoginBtnId = By.id("login-button");
-    private Driver driver;
+    private final Driver driver;
     private TestExecutionContext context;
 
     public LoginScreenWeb(Driver driver) {

@@ -5,7 +5,7 @@ import com.tests.screens.FinishScreen;
 import org.openqa.selenium.By;
 
 public class FinishScreenWeb extends FinishScreen {
-    private Driver driver;
+    private final Driver driver;
     private By byCompleteOrderTxtClass = By.className("complete-header");
 
     public FinishScreenWeb(Driver driver) {

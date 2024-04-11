@@ -6,7 +6,7 @@ import com.tests.screens.CheckOutOverviewScreen;
 import org.openqa.selenium.By;
 
 public class CheckOutInformationScreenWeb extends CheckOutInformationScreen {
-    private Driver driver;
+    private final Driver driver;
     private By byFirstNameTxtBoxId = By.id("first-name");
     private By byLastNameTxtBoxId = By.id("last-name");
     private By byPinCodeTxtBoxId = By.id("postal-code");

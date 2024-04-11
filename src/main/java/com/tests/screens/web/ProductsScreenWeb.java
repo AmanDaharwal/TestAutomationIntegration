@@ -10,8 +10,7 @@ public class ProductsScreenWeb extends ProductsScreen {
     private By byProductTitleClass = By.className("product_label");
     private By byCartIconId = By.id("shopping_cart_container");
     private String inventoryItemsXpath = "(//div[@class=\"inventory_item\"]//button)[%s]";
-
-    private Driver driver;
+    private final Driver driver;
 
     public ProductsScreenWeb(Driver driver) {
         this.driver = driver;

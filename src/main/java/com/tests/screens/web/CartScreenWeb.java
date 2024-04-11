@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 
 public class CartScreenWeb extends CartScreen {
 
-    private Driver driver;
+    private final Driver driver;
     private By byListOfCartItemClass = By.className("cart_item");
     private By byCheckoutBtnXpath = By.xpath("//a[contains(@class,\"checkout_button\")]");
 
