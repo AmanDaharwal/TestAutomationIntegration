@@ -21,7 +21,7 @@ public class ExtendTestReporter {
 
     private ExtendTestReporter() {
         extentReports = new ExtentReports();
-        extentReportDirAndName = "ExtendReport/ExtendReport.html";
+        extentReportDirAndName = "/ExtendReport/ExtendReport.html";
     }
 
     public static ExtendTestReporter getExtendTestReporter() {
