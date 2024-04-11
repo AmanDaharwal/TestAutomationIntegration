@@ -1,10 +1,10 @@
 package com.tests.screens;
 
 import com.exceptions.NotImplementedException;
+import com.runner.Driver;
 import com.runner.Drivers;
 import com.runner.TestRunner;
 import com.tests.screens.web.FinishScreenWeb;
-import org.openqa.selenium.WebDriver;
 
 public abstract class FinishScreen {
 
@@ -12,7 +12,7 @@ public abstract class FinishScreen {
 
     public static FinishScreen get() {
         String platform = TestRunner.getPlatform();
-        WebDriver driver = Drivers.getInnerDriver(Thread.currentThread().getId());
+        Driver driver = Drivers.getCurrentDriver(Thread.currentThread().getId());
 
         switch (platform) {
             case "web":

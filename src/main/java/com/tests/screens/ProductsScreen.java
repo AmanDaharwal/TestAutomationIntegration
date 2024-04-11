@@ -1,10 +1,10 @@
 package com.tests.screens;
 
 import com.exceptions.NotImplementedException;
+import com.runner.Driver;
 import com.runner.Drivers;
 import com.runner.TestRunner;
 import com.tests.screens.web.ProductsScreenWeb;
-import org.openqa.selenium.WebDriver;
 
 public abstract class ProductsScreen {
 
@@ -12,7 +12,7 @@ public abstract class ProductsScreen {
 
     public static ProductsScreen get() {
 
-        WebDriver driver = Drivers.getInnerDriver(Thread.currentThread().getId());
+        Driver driver = Drivers.getCurrentDriver(Thread.currentThread().getId());
         String platform = TestRunner.getPlatform();
         switch (platform) {
             case "web":

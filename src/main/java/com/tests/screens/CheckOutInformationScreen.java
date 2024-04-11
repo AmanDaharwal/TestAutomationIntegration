@@ -1,18 +1,17 @@
 package com.tests.screens;
 
 import com.exceptions.NotImplementedException;
+import com.runner.Driver;
 import com.runner.Drivers;
 import com.runner.TestRunner;
 import com.tests.screens.web.CheckOutInformationScreenWeb;
-import com.tests.screens.web.CheckOutOverviewScreenWeb;
-import org.openqa.selenium.WebDriver;
 
 public abstract class CheckOutInformationScreen {
     private static final String SCREEN_NAME = CheckOutInformationScreen.class.getSimpleName();
 
     public static CheckOutInformationScreen get() {
 
-        WebDriver driver = Drivers.getInnerDriver(Thread.currentThread().getId());
+        Driver driver = Drivers.getCurrentDriver(Thread.currentThread().getId());
         String platform = TestRunner.getPlatform();
         switch (platform) {
             case "web":
@@ -22,7 +21,10 @@ public abstract class CheckOutInformationScreen {
     }
 
     public abstract CheckOutInformationScreen enterFirstName(String firstName);
+
     public abstract CheckOutInformationScreen enterLastName(String lastName);
+
     public abstract CheckOutInformationScreen enterPinCode(String pinCode);
+
     public abstract CheckOutOverviewScreen clickContinue();
 }
