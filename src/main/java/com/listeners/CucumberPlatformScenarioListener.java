@@ -52,7 +52,7 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
     private void testCaseFinishedHandler(TestCaseFinished event) {
         long threadId = Thread.currentThread().getId();
         TestExecutionContext context = SessionContext.getTestExecutionContext(threadId);
-        Drivers.closeBrowser(context);
+        Drivers.quitApplication(context);
         String testCaseName = event.getTestCase().getName();
         Status status = Status.PASS;
         if (!event.getResult().getStatus().isOk()) {
