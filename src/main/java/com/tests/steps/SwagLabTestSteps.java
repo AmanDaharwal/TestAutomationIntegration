@@ -26,7 +26,7 @@ public class SwagLabTestSteps {
     @Given("I launch swag lab application")
     public void iLaunchSwagLabApplication() {
         Drivers.createDriverFor(testExecutionContext);
-        Drivers.launchUrl(testExecutionContext);
+        Drivers.startApplication(testExecutionContext);
     }
 
     @When("I shop for multiple items")
