@@ -46,8 +46,8 @@ public class Drivers {
         }
     }
 
-    public static WebDriver getInnerDriver(long threadId){
+    public static Driver getCurrentDriver(long threadId){
         TestExecutionContext context = TestRunner.getTestExecutionContext(threadId);
-        return  (WebDriver) context.getTestState(TEST_CONTEXT.INNER_DRIVER);
+        return  (Driver) context.getTestState(TEST_CONTEXT.DRIVER);
     }
 }
