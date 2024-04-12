@@ -7,9 +7,9 @@ import org.openqa.selenium.By;
 
 public class LoginScreenAndroid extends LoginScreen {
     private final Driver driver;
-    private final By byUsernameTxtBoxId = By.id("test-Username");
-    private final By byPasswordTxtBoxId = By.id("test-Password");
-    private final By byLoginBtnId = By.id("test-LOGIN");
+    private final By byUsernameTxtBoxXpath = By.xpath("//android.widget.EditText[@content-desc='test-Username']");
+    private final By byPasswordTxtBoxXpath = By.xpath("//android.widget.EditText[@content-desc='test-Password']");
+    private final By byLoginBtnXpath = By.xpath("//android.view.ViewGroup[@content-desc='test-LOGIN']");
 
     public LoginScreenAndroid(Driver driver) {
         this.driver = driver;
@@ -17,10 +17,10 @@ public class LoginScreenAndroid extends LoginScreen {
 
     @Override
     public LoginScreen loginToSwagLab(String username, String password) {
-        driver.enterText(byUsernameTxtBoxId, username);
-        driver.enterText(byPasswordTxtBoxId, password);
+        driver.enterText(byUsernameTxtBoxXpath, username);
+        driver.enterText(byPasswordTxtBoxXpath, password);
         ExtendTestLogger.logInfoMessage("Login for username " + username);
-        driver.click(byLoginBtnId);
+        driver.click(byLoginBtnXpath);
         return this;
     }
 }

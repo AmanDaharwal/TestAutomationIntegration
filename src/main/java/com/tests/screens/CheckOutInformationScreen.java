@@ -4,6 +4,7 @@ import com.exceptions.NotImplementedException;
 import com.runner.Driver;
 import com.runner.Drivers;
 import com.runner.TestRunner;
+import com.tests.screens.android.CheckOutInformationScreenAndroid;
 import com.tests.screens.web.CheckOutInformationScreenWeb;
 
 public abstract class CheckOutInformationScreen {
@@ -16,6 +17,8 @@ public abstract class CheckOutInformationScreen {
         switch (platform) {
             case "web":
                 return new CheckOutInformationScreenWeb(driver);
+            case "android":
+                return new CheckOutInformationScreenAndroid(driver);
         }
         throw new NotImplementedException(SCREEN_NAME + " is not implemented for platform " + platform);
     }

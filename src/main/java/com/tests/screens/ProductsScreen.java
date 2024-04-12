@@ -4,6 +4,7 @@ import com.exceptions.NotImplementedException;
 import com.runner.Driver;
 import com.runner.Drivers;
 import com.runner.TestRunner;
+import com.tests.screens.android.ProductsScreenAndroid;
 import com.tests.screens.web.ProductsScreenWeb;
 
 public abstract class ProductsScreen {
@@ -17,6 +18,8 @@ public abstract class ProductsScreen {
         switch (platform) {
             case "web":
                 return new ProductsScreenWeb(driver);
+            case "android":
+                return new ProductsScreenAndroid(driver);
         }
         throw new NotImplementedException(SCREEN_NAME + " is not implemented for platform " + platform);
     }

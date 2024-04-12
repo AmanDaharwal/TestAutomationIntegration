@@ -4,6 +4,7 @@ import com.exceptions.NotImplementedException;
 import com.runner.Driver;
 import com.runner.Drivers;
 import com.runner.TestRunner;
+import com.tests.screens.android.FinishScreenAndroid;
 import com.tests.screens.web.FinishScreenWeb;
 
 public abstract class FinishScreen {
@@ -17,6 +18,8 @@ public abstract class FinishScreen {
         switch (platform) {
             case "web":
                 return new FinishScreenWeb(driver);
+            case "android":
+                return new FinishScreenAndroid(driver);
         }
         throw new NotImplementedException(SCREEN_NAME + " is not implemented for platform " + platform);
     }
