@@ -1,11 +1,14 @@
 package com.runner;
 
 import com.context.TestExecutionContext;
+import com.entities.Platform;
 import com.entities.TEST_CONTEXT;
+import com.exceptions.AutomationException;
 import com.exceptions.TestExecutionFailedException;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.apache.logging.log4j.LogManager;
@@ -23,26 +26,51 @@ class MobileDriver {
     private final static Logger LOGGER = LogManager.getLogger(MobileDriver.class);
     private static AppiumDriverLocalService appiumDriverLocalService;
 
-    static Driver createAndroidDriver(TestExecutionContext context) {
-        WebDriver innerDriver = setUpDriverFor(TestRunner.getPlatform());
+    static Driver createMobileDriver(TestExecutionContext context) {
+        Platform platform = TestRunner.getPlatform();
+        WebDriver innerDriver = setUpDriverFor(platform);
         Driver driver = new Driver(innerDriver);
         context.addTestState(TEST_CONTEXT.INNER_DRIVER, innerDriver);
         context.addTestState(TEST_CONTEXT.DRIVER, driver);
-        LOGGER.info("Driver created for test - " + context.getTestName());
+        LOGGER.info(platform + " Driver created for test - " + context.getTestName());
         return driver;
     }
 
-    private static WebDriver setUpDriverFor(String platform) {
+    private static WebDriver setUpDriverFor(Platform platform) {
         startAppiumServer();
-        UiAutomator2Options options = getOptions();
+        switch (platform) {
+            case android:
+                return setUpAndroidDriver();
+            case ios:
+                return setUpiOSDriver();
+        }
+        throw new AutomationException("Incorrect platform name for mobile provided as " + platform);
+    }
+
+    private static WebDriver setUpiOSDriver() {
         try {
-            return new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
+            return new IOSDriver(new URL("http://127.0.0.1:4723"), getIosOptions());
         } catch (MalformedURLException e) {
-            throw new TestExecutionFailedException("Unable to start Appium Driver with exception " + e.getMessage());
+            throw new AutomationException("Unable to start iOS Driver with exception " + e.getMessage());
         }
     }
 
-    private static UiAutomator2Options getOptions() {
+    private static XCUITestOptions getIosOptions() {
+        XCUITestOptions options = new XCUITestOptions();
+        options.setDeviceName("iPhone 15");
+        options.setApp(System.getProperty("user.dir") + "/src/main/resources/apps/iOS_SwagLab.app");
+        return options;
+    }
+
+    private static WebDriver setUpAndroidDriver() {
+        try {
+            return new AndroidDriver(new URL("http://127.0.0.1:4723"), getAndroidOptions());
+        } catch (MalformedURLException e) {
+            throw new AutomationException("Unable to start Android Driver with exception " + e.getMessage());
+        }
+    }
+
+    private static UiAutomator2Options getAndroidOptions() {
         UiAutomator2Options options = new UiAutomator2Options();
         options.setDeviceName("sdk_gphone_arm64");
         options.setApp(System.getProperty("user.dir") + "/src/main/resources/apps/Android_SwagLab.apk");
