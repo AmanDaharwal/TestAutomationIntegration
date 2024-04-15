@@ -3,8 +3,11 @@ package com.runner;
 import com.context.TestExecutionContext;
 import com.entities.TEST_CONTEXT;
 import com.exceptions.AutomationException;
+import com.exceptions.InvalidTestDataException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,6 +15,10 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 class BrowserDriver {
     private final static Logger LOGGER = LogManager.getLogger(BrowserDriver.class);
@@ -38,25 +45,25 @@ class BrowserDriver {
 
     private static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--incognito");
-        options.addArguments("--start-maximized");
-        options.addArguments("--disable-extensions");
+        for (Object arg : getArguments()) {
+            options.addArguments(arg.toString());
+        }
         return options;
     }
 
     private static FirefoxOptions getFirefoxOptions() {
         FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("--incognito");
-        options.addArguments("--start-maximized");
-        options.addArguments("--disable-extensions");
+        for (Object arg : getArguments()) {
+            options.addArguments(arg.toString());
+        }
         return options;
     }
 
     private static EdgeOptions getEdgeOptions() {
         EdgeOptions options = new EdgeOptions();
-        options.addArguments("--incognito");
-        options.addArguments("--start-maximized");
-        options.addArguments("--disable-extensions");
+        for (Object arg : getArguments()) {
+            options.addArguments(arg.toString());
+        }
         return options;
     }
 
@@ -74,6 +81,18 @@ class BrowserDriver {
             throw new AutomationException(exception.getMessage(), exception);
         } finally {
             driver.closeBrowser();
+        }
+    }
+
+    private static JSONArray getArguments() {
+        String capabilitiesFiles = TestRunner.getConfig(TEST_CONTEXT.CAPABILITIES);
+        String platform = TestRunner.getPlatform();
+        try {
+            return new JSONObject(new String(Files.readAllBytes(Paths.get(capabilitiesFiles))))
+                    .getJSONObject(platform)
+                    .getJSONArray("arguments");
+        } catch (IOException e) {
+            throw new InvalidTestDataException("Unable to read arguments from capabilities file at " + capabilitiesFiles);
         }
     }
 }

@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +23,7 @@ final class Setup {
     private final static String TEST_DATA = "TEST_DATA";
     private final static String PARALLEL = "PARALLEL";
     private final static String CAPTURE_LOGS = "CAPTURE_LOGS";
+    private static final String CAPABILITIES = "CAPS";
 
     private Setup() {
 
@@ -54,6 +54,7 @@ final class Setup {
         configMap.put(TEST_DATA, properties.get(TEST_DATA));
         configMap.put(PARALLEL, properties.get(PARALLEL));
         configMap.put(CAPTURE_LOGS, properties.get(CAPTURE_LOGS));
+        configMap.put(CAPABILITIES, properties.get(CAPABILITIES));
         logger.info(configMap);
     }
 

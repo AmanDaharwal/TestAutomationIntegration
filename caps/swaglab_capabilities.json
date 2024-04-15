@@ -1,0 +1,12 @@
+{
+  "web": {
+    "arguments" : [
+      "--incognito",
+      "--start-maximized",
+      "--disable-extensions"
+    ]
+  },
+  "android": {
+
+  }
+}
