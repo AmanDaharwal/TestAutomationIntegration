@@ -1,5 +1,6 @@
 package com.tests.screens;
 
+import com.entities.Platform;
 import com.exceptions.NotImplementedException;
 import com.runner.Driver;
 import com.runner.Drivers;
@@ -15,11 +16,11 @@ public abstract class CartScreen {
     public static CartScreen get() {
 
         Driver driver = Drivers.getCurrentDriver(Thread.currentThread().getId());
-        String platform = TestRunner.getPlatform();
+        Platform platform = TestRunner.getPlatform();
         switch (platform) {
-            case "web":
+            case web:
                 return new CartScreenWeb(driver);
-            case "android":
+            case android:
                 return new CartScreenAndroid(driver);
         }
         throw new NotImplementedException(SCREEN_NAME + " is not implemented for platform " + platform);

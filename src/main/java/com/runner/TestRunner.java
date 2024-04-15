@@ -1,6 +1,7 @@
 package com.runner;
 
 import com.context.TestExecutionContext;
+import com.entities.Platform;
 import com.entities.TEST_CONTEXT;
 import com.exceptions.InvalidTestDataException;
 import io.cucumber.core.cli.Main;
@@ -10,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 public class TestRunner {
 
     public static final Logger LOGGER = LogManager.getLogger(TestRunner.class);
-    private static String platform = "";
+    private static Platform platform;
 
     TestRunner() {
         throw new InvalidTestDataException("Required args not provided to Runner");
@@ -18,7 +19,7 @@ public class TestRunner {
 
     TestRunner(String[] args) {
         String configFilePath = args[0], tags = args[1];
-        platform = args[2];
+        platform = Platform.valueOf(args[2].toLowerCase());
         LOGGER.info("Running tests for platform " + platform + " with configuration in " + configFilePath);
         Setup.load(configFilePath);
         run(tags);
@@ -50,7 +51,7 @@ public class TestRunner {
         return Setup.getURL();
     }
 
-    public static String getPlatform() {
+    public static Platform getPlatform() {
         return platform;
     }
 

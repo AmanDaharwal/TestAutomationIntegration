@@ -1,6 +1,7 @@
 package com.runner;
 
 import com.context.TestExecutionContext;
+import com.entities.Platform;
 import com.entities.TEST_CONTEXT;
 import com.exceptions.AutomationException;
 import com.exceptions.InvalidTestDataException;
@@ -86,7 +87,7 @@ class BrowserDriver {
 
     private static JSONArray getArguments() {
         String capabilitiesFiles = TestRunner.getConfig(TEST_CONTEXT.CAPABILITIES);
-        String platform = TestRunner.getPlatform();
+        String platform = TestRunner.getPlatform().toString();
         try {
             return new JSONObject(new String(Files.readAllBytes(Paths.get(capabilitiesFiles))))
                     .getJSONObject(platform)
