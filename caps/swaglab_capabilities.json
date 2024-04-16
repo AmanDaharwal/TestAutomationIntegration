@@ -1,12 +1,21 @@
 {
   "web": {
-    "arguments" : [
+    "arguments": [
       "--incognito",
       "--start-maximized",
       "--disable-extensions"
     ]
   },
-  "android": {
-
+  "mobile": {
+    "remoteAddress": "http://127.0.0.1:4723",
+    "android": {
+      "deviceName": "sdk_gphone_arm64",
+      "appPath": "/src/main/resources/apps/Android_SwagLab.apk",
+      "appActivity": "com.swaglabsmobileapp.MainActivity"
+    },
+    "ios": {
+      "deviceName": "iPhone 15",
+      "appPath": "/src/main/resources/apps/iOS_SwagLab.app"
+    }
   }
 }
