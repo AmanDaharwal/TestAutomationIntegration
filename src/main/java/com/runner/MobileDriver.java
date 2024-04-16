@@ -13,6 +13,7 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 import org.openqa.selenium.WebDriver;
 
 import java.io.BufferedReader;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 class MobileDriver {
     private final static Logger LOGGER = LogManager.getLogger(MobileDriver.class);
@@ -49,7 +52,7 @@ class MobileDriver {
 
     private static WebDriver setUpiOSDriver() {
         try {
-            return new IOSDriver(new URL("http://127.0.0.1:4723"), getIosOptions());
+            return new IOSDriver(new URL(getRemoteAddress()), getIosOptions());
         } catch (MalformedURLException e) {
             throw new AutomationException("Unable to start iOS Driver with exception " + e.getMessage());
         }
@@ -64,7 +67,7 @@ class MobileDriver {
 
     private static WebDriver setUpAndroidDriver() {
         try {
-            return new AndroidDriver(new URL("http://127.0.0.1:4723"), getAndroidOptions());
+            return new AndroidDriver(new URL(getRemoteAddress()), getAndroidOptions());
         } catch (MalformedURLException e) {
             throw new AutomationException("Unable to start Android Driver with exception " + e.getMessage());
         }
@@ -112,5 +115,15 @@ class MobileDriver {
             throw new TestExecutionFailedException("Exception in getting Appium server path with message " + e.getMessage());
         }
         throw new TestExecutionFailedException("Unable to retrieve Appium Server Path");
+    }
+
+    private static String getRemoteAddress() {
+        String capabilitiesFilePath = TestRunner.getConfig(TEST_CONTEXT.CAPABILITIES);
+        try {
+            return new JSONObject(new String(Files.readAllBytes(Paths.get(capabilitiesFilePath))))
+                    .getJSONObject("mobile").getString("remoteAddress");
+        } catch (IOException e) {
+            throw new AutomationException("Unable to get remote address for mobile with exception " + e);
+        }
     }
 }
