@@ -30,5 +30,7 @@ public abstract class CheckOutInformationScreen {
 
     public abstract CheckOutInformationScreen enterPinCode(String pinCode);
 
+    public abstract String getPageTitle();
+
     public abstract CheckOutOverviewScreen clickContinue();
 }

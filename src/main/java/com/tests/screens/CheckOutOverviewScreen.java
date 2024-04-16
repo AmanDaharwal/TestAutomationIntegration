@@ -28,4 +28,6 @@ public abstract class CheckOutOverviewScreen {
     public abstract int getNumberOfCartItems();
 
     public abstract FinishScreen clickFinish();
+
+    public abstract String getPageTitle();
 }

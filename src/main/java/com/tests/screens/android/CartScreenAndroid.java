@@ -9,6 +9,7 @@ public class CartScreenAndroid extends CartScreen {
     private final Driver driver;
     private By byListOfCartItemXpath = By.xpath("//android.view.ViewGroup[@content-desc='test-Item']");
     private By byCheckoutBtnXpath = By.xpath("//android.view.ViewGroup[@content-desc='test-CHECKOUT']");
+    private By byCartPageTitleXpath = By.xpath("//android.widget.TextView[@text='YOUR CART']");
 
     public CartScreenAndroid(Driver driver) {
         this.driver = driver;
@@ -23,5 +24,10 @@ public class CartScreenAndroid extends CartScreen {
     public CheckOutOverviewScreen clickCheckout() {
         driver.scrollToElementInDevice(byCheckoutBtnXpath).click();
         return CheckOutOverviewScreen.get();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return driver.waitForElementToBePresent(byCartPageTitleXpath).getText();
     }
 }

@@ -10,14 +10,14 @@ public class ProductsScreenAndroid extends ProductsScreen {
     private By byCartIconXpath = By.xpath("//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup");
     private String inventoryItemsXpath = "(//android.view.ViewGroup[@content-desc='test-ADD TO CART'])[%s]";
     private final Driver driver;
-
+    
     public ProductsScreenAndroid(Driver driver) {
         this.driver = driver;
     }
 
     @Override
     public String getPageTitle() {
-        return driver.getText(byProductTitleXpath);
+        return driver.waitForElementToBePresent(byProductTitleXpath).getText();
     }
 
     @Override

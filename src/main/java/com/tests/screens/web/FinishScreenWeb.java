@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 public class FinishScreenWeb extends FinishScreen {
     private final Driver driver;
     private By byCompleteOrderTxtClass = By.className("complete-header");
+    private By byFinishTitleClass = By.className("subheader");
 
     public FinishScreenWeb(Driver driver) {
         this.driver = driver;
@@ -16,5 +17,10 @@ public class FinishScreenWeb extends FinishScreen {
     public boolean isOrderSuccessful() {
         String orderSuccessfulText = "THANK YOU FOR YOUR ORDER";
         return driver.getText(byCompleteOrderTxtClass).equalsIgnoreCase(orderSuccessfulText);
+    }
+
+    @Override
+    public String getPageTitle() {
+        return driver.waitForElementToBePresent(byFinishTitleClass).getText();
     }
 }

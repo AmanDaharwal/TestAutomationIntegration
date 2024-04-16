@@ -26,4 +26,6 @@ public abstract class FinishScreen {
     }
 
     public abstract boolean isOrderSuccessful();
+
+    public abstract String getPageTitle();
 }

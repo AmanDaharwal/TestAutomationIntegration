@@ -18,7 +18,7 @@ public class ProductsScreenWeb extends ProductsScreen {
 
     @Override
     public String getPageTitle() {
-        return driver.getText(byProductTitleClass);
+        return driver.waitForElementToBePresent(byProductTitleClass).getText();
     }
 
     @Override

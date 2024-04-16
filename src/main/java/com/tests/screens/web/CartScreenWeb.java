@@ -9,7 +9,8 @@ public class CartScreenWeb extends CartScreen {
 
     private final Driver driver;
     private By byListOfCartItemClass = By.className("cart_item");
-    private By byCheckoutBtnXpath = By.xpath("//a[contains(@class,\"checkout_button\")]");
+    private By byCheckoutBtnXpath = By.xpath("//a[contains(@class,'checkout_button')]");
+    private By byCartTitleClass = By.className("subheader");
 
     public CartScreenWeb(Driver driver) {
         this.driver = driver;
@@ -24,5 +25,10 @@ public class CartScreenWeb extends CartScreen {
     public CheckOutOverviewScreen clickCheckout() {
         driver.click(byCheckoutBtnXpath);
         return CheckOutOverviewScreen.get();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return driver.waitForElementToBePresent(byCartTitleClass).getText();
     }
 }

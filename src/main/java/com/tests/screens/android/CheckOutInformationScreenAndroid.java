@@ -11,6 +11,7 @@ public class CheckOutInformationScreenAndroid extends CheckOutInformationScreen 
     private By byLastNameTxtBoxXpath = By.xpath("//android.widget.EditText[@content-desc='test-Last Name']");
     private By byPinCodeTxtBoxXpath = By.xpath("//android.widget.EditText[@content-desc='test-Zip/Postal Code']");
     private By byContinueBtnXpath = By.xpath("//android.view.ViewGroup[@content-desc='test-CONTINUE']");
+    private By byCheckoutInfoPageTitleXpath = By.xpath("//android.widget.TextView[@text='CHECKOUT: INFORMATION']");
 
     public CheckOutInformationScreenAndroid(Driver driver) {
         this.driver = driver;
@@ -32,6 +33,11 @@ public class CheckOutInformationScreenAndroid extends CheckOutInformationScreen 
     public CheckOutInformationScreen enterPinCode(String pinCode) {
         driver.enterText(byPinCodeTxtBoxXpath, pinCode);
         return this;
+    }
+
+    @Override
+    public String getPageTitle() {
+        return driver.waitForElementToBePresent(byCheckoutInfoPageTitleXpath).getText();
     }
 
     @Override

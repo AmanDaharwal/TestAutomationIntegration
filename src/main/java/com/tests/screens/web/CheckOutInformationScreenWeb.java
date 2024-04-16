@@ -11,6 +11,7 @@ public class CheckOutInformationScreenWeb extends CheckOutInformationScreen {
     private By byLastNameTxtBoxId = By.id("last-name");
     private By byPinCodeTxtBoxId = By.id("postal-code");
     private By byContinueBtnXpath = By.xpath("//input[contains(@class,\"cart_button\")]");
+    private By byCheckoutInfoTitleClass = By.className("subheader");
 
     public CheckOutInformationScreenWeb(Driver driver) {
         this.driver = driver;
@@ -32,6 +33,11 @@ public class CheckOutInformationScreenWeb extends CheckOutInformationScreen {
     public CheckOutInformationScreen enterPinCode(String pinCode) {
         driver.enterText(byPinCodeTxtBoxId, pinCode);
         return this;
+    }
+
+    @Override
+    public String getPageTitle() {
+        return driver.waitForElementToBePresent(byCheckoutInfoTitleClass).getText();
     }
 
     @Override
