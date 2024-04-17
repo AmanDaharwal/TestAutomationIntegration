@@ -6,6 +6,7 @@ import com.runner.Driver;
 import com.runner.Drivers;
 import com.runner.TestRunner;
 import com.tests.screens.android.FinishScreenAndroid;
+import com.tests.screens.ios.FinishScreenIos;
 import com.tests.screens.web.FinishScreenWeb;
 
 public abstract class FinishScreen {
@@ -21,6 +22,8 @@ public abstract class FinishScreen {
                 return new FinishScreenWeb(driver);
             case android:
                 return new FinishScreenAndroid(driver);
+            case ios:
+                return new FinishScreenIos(driver);
         }
         throw new NotImplementedException(SCREEN_NAME + " is not implemented for platform " + platform);
     }

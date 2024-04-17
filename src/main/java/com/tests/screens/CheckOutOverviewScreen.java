@@ -6,6 +6,7 @@ import com.runner.Driver;
 import com.runner.Drivers;
 import com.runner.TestRunner;
 import com.tests.screens.android.CheckOutOverviewScreenAndroid;
+import com.tests.screens.ios.CheckOutOverviewScreenIos;
 import com.tests.screens.web.CheckOutOverviewScreenWeb;
 
 public abstract class CheckOutOverviewScreen {
@@ -21,6 +22,8 @@ public abstract class CheckOutOverviewScreen {
                 return new CheckOutOverviewScreenWeb(driver);
             case android:
                 return new CheckOutOverviewScreenAndroid(driver);
+            case ios:
+                return new CheckOutOverviewScreenIos(driver);
         }
         throw new NotImplementedException(SCREEN_NAME + " is not implemented for platform " + platform);
     }

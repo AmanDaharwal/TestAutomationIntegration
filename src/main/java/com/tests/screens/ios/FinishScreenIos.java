@@ -1,15 +1,15 @@
-package com.tests.screens.android;
+package com.tests.screens.ios;
 
 import com.runner.Driver;
 import com.tests.screens.FinishScreen;
 import org.openqa.selenium.By;
 
-public class FinishScreenAndroid extends FinishScreen {
+public class FinishScreenIos extends FinishScreen {
     private final Driver driver;
-    private By byCompleteOrderTxtXpath = By.xpath("//android.widget.TextView[starts-with(@name,'THANK')]");
-    private By byFinishPageTitleXpath = By.xpath("//android.widget.TextView[@text='CHECKOUT: COMPLETE!']");
+    private By byCompleteOrderTxtXpath = By.xpath("//XCUIElementTypeStaticText[starts-with(@name,'THANK')]");
+    private By byFinishPageTitleXpath = By.xpath("//XCUIElementTypeStaticText[@name='CHECKOUT: COMPLETE!']");
 
-    public FinishScreenAndroid(Driver driver) {
+    public FinishScreenIos(Driver driver) {
         this.driver = driver;
     }
 

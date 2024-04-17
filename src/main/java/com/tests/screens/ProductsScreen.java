@@ -6,6 +6,7 @@ import com.runner.Driver;
 import com.runner.Drivers;
 import com.runner.TestRunner;
 import com.tests.screens.android.ProductsScreenAndroid;
+import com.tests.screens.ios.ProductsScreenIos;
 import com.tests.screens.web.ProductsScreenWeb;
 
 public abstract class ProductsScreen {
@@ -21,6 +22,8 @@ public abstract class ProductsScreen {
                 return new ProductsScreenWeb(driver);
             case android:
                 return new ProductsScreenAndroid(driver);
+            case ios:
+                return new ProductsScreenIos(driver);
         }
         throw new NotImplementedException(SCREEN_NAME + " is not implemented for platform " + platform);
     }
