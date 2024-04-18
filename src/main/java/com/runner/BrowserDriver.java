@@ -39,6 +39,7 @@ class BrowserDriver {
         context.addTestState(TEST_CONTEXT.INNER_DRIVER, innerDriver);
         context.addTestState(TEST_CONTEXT.DRIVER, driver);
         LOGGER.info("Driver created for test - " + context.getTestName());
+        driver.launchUrl();
         return driver;
     }
 
@@ -93,11 +94,6 @@ class BrowserDriver {
             options.addArguments(arg.toString());
         }
         return options;
-    }
-
-    static void startApplication(TestExecutionContext context) {
-        Driver driver = (Driver) context.getTestState(TEST_CONTEXT.DRIVER);
-        driver.launchUrl();
     }
 
     static void quitDriver(TestExecutionContext context) {

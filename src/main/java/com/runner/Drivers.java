@@ -29,14 +29,6 @@ public class Drivers {
         throw new InvalidTestDataException(platform+ " does not exist");
     }
 
-    public static void startApplication(TestExecutionContext context){
-        Platform platform = TestRunner.getPlatform();
-        switch (platform){
-            case web:
-                BrowserDriver.startApplication(context);
-        }
-    }
-
     public static void quitApplication(TestExecutionContext context){
         Platform platform = TestRunner.getPlatform();
         switch (platform){
