@@ -24,6 +24,7 @@ final class Setup {
     private final static String PARALLEL = "PARALLEL";
     private final static String CAPTURE_LOGS = "CAPTURE_LOGS";
     private static final String CAPABILITIES = "CAPS";
+    private static final String RUN_IN_CI = "RUN_IN_CI";
 
     private Setup() {
 
@@ -55,6 +56,7 @@ final class Setup {
         configMap.put(PARALLEL, properties.get(PARALLEL));
         configMap.put(CAPTURE_LOGS, properties.get(CAPTURE_LOGS));
         configMap.put(CAPABILITIES, properties.get(CAPABILITIES));
+        configMap.put(RUN_IN_CI, properties.get(RUN_IN_CI));
         logger.info(configMap);
     }
 

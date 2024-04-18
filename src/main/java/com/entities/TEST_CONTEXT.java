@@ -10,4 +10,5 @@ public class TEST_CONTEXT {
     public static final String DRIVER = "driver";
     public static final String CAPTURE_LOGS = "CAPTURE_LOGS";
     public static final String CAPABILITIES = "CAPS";
+    public static final String RUN_IN_CI = "RUN_IN_CI";
 }
