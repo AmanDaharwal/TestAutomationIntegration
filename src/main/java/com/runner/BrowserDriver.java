@@ -1,7 +1,7 @@
 package com.runner;
 
 import com.context.TestExecutionContext;
-import com.entities.Platform;
+import com.entities.Browser;
 import com.entities.TEST_CONTEXT;
 import com.exceptions.AutomationException;
 import com.exceptions.InvalidTestDataException;
@@ -16,8 +16,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -25,23 +28,47 @@ class BrowserDriver {
     private final static Logger LOGGER = LogManager.getLogger(BrowserDriver.class);
 
     static Driver createWebDriver(TestExecutionContext context) {
-        WebDriver innerDriver = null;
-        switch (TestRunner.getConfig("browser")) {
-            case "chrome":
-                innerDriver = new ChromeDriver(getChromeOptions());
-                break;
-            case "firefox":
-                innerDriver = new FirefoxDriver(getFirefoxOptions());
-                break;
-            case "edge":
-                innerDriver = new EdgeDriver(getEdgeOptions());
-                break;
+        WebDriver innerDriver;
+        Browser browser = Browser.valueOf(TestRunner.getConfig(TEST_CONTEXT.BROWSER).toLowerCase());
+        if (Boolean.valueOf(TestRunner.getConfig(TEST_CONTEXT.RUN_IN_CI))) {
+            innerDriver = getRemoteWebDriverFor(browser);
+        } else {
+            innerDriver = getWebDriverFor(browser);
         }
         Driver driver = new Driver(innerDriver);
         context.addTestState(TEST_CONTEXT.INNER_DRIVER, innerDriver);
         context.addTestState(TEST_CONTEXT.DRIVER, driver);
         LOGGER.info("Driver created for test - " + context.getTestName());
         return driver;
+    }
+
+    private static WebDriver getWebDriverFor(Browser browser) {
+        switch (browser) {
+            case chrome:
+                return new ChromeDriver(getChromeOptions());
+            case firefox:
+                return new FirefoxDriver(getFirefoxOptions());
+            case edge:
+                return new EdgeDriver(getEdgeOptions());
+        }
+        throw new AutomationException("Incorrect browser name provided as " + browser);
+    }
+
+    private static WebDriver getRemoteWebDriverFor(Browser browser) {
+        String remoteUrl = "http://localhost:4444/wd/hub";
+        try {
+            switch (browser) {
+                case chrome:
+                    return new RemoteWebDriver(new URL(remoteUrl), getChromeOptions());
+                case firefox:
+                    return new RemoteWebDriver(new URL(remoteUrl), getFirefoxOptions());
+                case edge:
+                    return new RemoteWebDriver(new URL(remoteUrl), getEdgeOptions());
+            }
+        } catch (MalformedURLException exception) {
+            throw new AutomationException("Unable to initialized RemoteWebDriver with url " + remoteUrl, exception);
+        }
+        throw new AutomationException("Incorrect browser name provided as " + browser);
     }
 
     private static ChromeOptions getChromeOptions() {
