@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 public class CartScreenIos extends CartScreen {
     private final Driver driver;
     private By byListOfCartItemXpath = By.xpath("//XCUIElementTypeOther[@name='test-REMOVE']");
-    private By byCheckoutBtnXpath = By.xpath("//XCUIElementTypeOther[@name='test-Cart']/XCUIElementTypeOther");
+    private By byCheckoutBtnXpath = By.xpath("//XCUIElementTypeOther[@name='test-CHECKOUT']");
     private By byCartPageTitleXpath = By.xpath("//XCUIElementTypeStaticText[@name='YOUR CART']");
 
     public CartScreenIos(Driver driver) {
