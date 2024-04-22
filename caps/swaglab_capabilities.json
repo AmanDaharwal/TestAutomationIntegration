@@ -14,7 +14,7 @@
       "appActivity": "com.swaglabsmobileapp.MainActivity"
     },
     "ios": {
-      "deviceName": "iPhone 15",
+      "deviceName": "iPhone SE",
       "appPath": "/src/main/resources/apps/iOS_SwagLab.app"
     }
   }
