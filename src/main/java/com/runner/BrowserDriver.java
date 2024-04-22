@@ -74,7 +74,7 @@ class BrowserDriver {
 
     private static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
-        for (Object arg : getArguments()) {
+        for (Object arg : getWebArguments()) {
             options.addArguments(arg.toString());
         }
         return options;
@@ -82,7 +82,7 @@ class BrowserDriver {
 
     private static FirefoxOptions getFirefoxOptions() {
         FirefoxOptions options = new FirefoxOptions();
-        for (Object arg : getArguments()) {
+        for (Object arg : getWebArguments()) {
             options.addArguments(arg.toString());
         }
         return options;
@@ -90,7 +90,7 @@ class BrowserDriver {
 
     private static EdgeOptions getEdgeOptions() {
         EdgeOptions options = new EdgeOptions();
-        for (Object arg : getArguments()) {
+        for (Object arg : getWebArguments()) {
             options.addArguments(arg.toString());
         }
         return options;
@@ -108,7 +108,7 @@ class BrowserDriver {
         }
     }
 
-    private static JSONArray getArguments() {
+    private static JSONArray getWebArguments() {
         String capabilitiesFiles = TestRunner.getConfig(TEST_CONTEXT.CAPABILITIES);
         String platform = TestRunner.getPlatform().toString();
         try {
