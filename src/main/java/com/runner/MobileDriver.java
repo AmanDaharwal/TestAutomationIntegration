@@ -28,6 +28,7 @@ import java.nio.file.Paths;
 class MobileDriver {
     private final static Logger LOGGER = LogManager.getLogger(MobileDriver.class);
     private static AppiumDriverLocalService appiumDriverLocalService;
+    private final static JSONObject MOBILE_CAPS = getMobileCapabilities();
 
     static Driver createMobileDriver(TestExecutionContext context) {
         Platform platform = TestRunner.getPlatform();
@@ -52,7 +53,7 @@ class MobileDriver {
 
     private static WebDriver setUpiOSDriver() {
         try {
-            return new IOSDriver(new URL(getRemoteAddress()), getIosOptions());
+            return new IOSDriver(new URL(MOBILE_CAPS.getString(TEST_CONTEXT.REMOTE_ADDRESS)), getIosOptions());
         } catch (MalformedURLException e) {
             throw new AutomationException("Unable to start iOS Driver with exception " + e.getMessage());
         }
@@ -60,14 +61,16 @@ class MobileDriver {
 
     private static XCUITestOptions getIosOptions() {
         XCUITestOptions options = new XCUITestOptions();
-        options.setDeviceName("iPhone 15");
-        options.setApp(System.getProperty("user.dir") + "/src/main/resources/apps/iOS_SwagLab.app");
+        String platformName = options.getPlatformName().toString().toLowerCase();
+        JSONObject iosCaps = MOBILE_CAPS.getJSONObject(platformName);
+        options.setDeviceName(iosCaps.getString(TEST_CONTEXT.DEVICE_NAME));
+        options.setApp(System.getProperty("user.dir") + iosCaps.getString(TEST_CONTEXT.APP_PATH));
         return options;
     }
 
     private static WebDriver setUpAndroidDriver() {
         try {
-            return new AndroidDriver(new URL(getRemoteAddress()), getAndroidOptions());
+            return new AndroidDriver(new URL(MOBILE_CAPS.getString(TEST_CONTEXT.REMOTE_ADDRESS)), getAndroidOptions());
         } catch (MalformedURLException e) {
             throw new AutomationException("Unable to start Android Driver with exception " + e.getMessage());
         }
@@ -75,9 +78,11 @@ class MobileDriver {
 
     private static UiAutomator2Options getAndroidOptions() {
         UiAutomator2Options options = new UiAutomator2Options();
-        options.setDeviceName("sdk_gphone_arm64");
-        options.setApp(System.getProperty("user.dir") + "/src/main/resources/apps/Android_SwagLab.apk");
-        options.setAppActivity("com.swaglabsmobileapp.MainActivity");
+        String platformName = options.getPlatformName().toString().toLowerCase();
+        JSONObject androidCaps = MOBILE_CAPS.getJSONObject(platformName);
+        options.setDeviceName(androidCaps.getString(TEST_CONTEXT.DEVICE_NAME));
+        options.setApp(System.getProperty("user.dir") + androidCaps.getString(TEST_CONTEXT.APP_PATH));
+        options.setAppActivity(androidCaps.getString(TEST_CONTEXT.APP_PACKAGE));
         return options;
     }
 
@@ -117,11 +122,11 @@ class MobileDriver {
         throw new TestExecutionFailedException("Unable to retrieve Appium Server Path");
     }
 
-    private static String getRemoteAddress() {
+    private static JSONObject getMobileCapabilities() {
         String capabilitiesFilePath = TestRunner.getConfig(TEST_CONTEXT.CAPABILITIES);
         try {
             return new JSONObject(new String(Files.readAllBytes(Paths.get(capabilitiesFilePath))))
-                    .getJSONObject("mobile").getString("remoteAddress");
+                    .getJSONObject("mobile");
         } catch (IOException e) {
             throw new AutomationException("Unable to get remote address for mobile with exception " + e);
         }
