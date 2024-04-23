@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 public class FinishScreenAndroid extends FinishScreen {
     private final Driver driver;
-    private By byCompleteOrderTxtXpath = By.xpath("//android.widget.TextView[starts-with(@name,'THANK')]");
+    private By byCompleteOrderTxtXpath = By.xpath("//android.widget.TextView[starts-with(@text,'THANK')]");
     private By byFinishPageTitleXpath = By.xpath("//android.widget.TextView[@text='CHECKOUT: COMPLETE!']");
 
     public FinishScreenAndroid(Driver driver) {
@@ -15,7 +15,7 @@ public class FinishScreenAndroid extends FinishScreen {
 
     @Override
     public boolean isOrderSuccessful() {
-        String orderSuccessfulText = "THANK YOU FOR YOUR ORDER";
+        String orderSuccessfulText = "THANK YOU FOR YOU ORDER";
         return driver.getText(byCompleteOrderTxtXpath).equalsIgnoreCase(orderSuccessfulText);
     }
 
