@@ -15,7 +15,7 @@ public class FinishScreenIos extends FinishScreen {
 
     @Override
     public boolean isOrderSuccessful() {
-        String orderSuccessfulText = "THANK YOU FOR YOUR ORDER";
+        String orderSuccessfulText = "THANK YOU FOR YOU ORDER";
         return driver.getText(byCompleteOrderTxtXpath).equalsIgnoreCase(orderSuccessfulText);
     }
 
