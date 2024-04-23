@@ -18,13 +18,14 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.Keys;
 import com.entities.ScrollDirection;
 
 import java.time.Duration;
 
 public class Driver {
     private final static Logger LOGGER = LogManager.getLogger(Driver.class);
-    private WebDriver driver;
+    private final WebDriver driver;
     private final static double SCROLL_RATIO = 0.5;
     private final static Duration SCROLL_DURATION = Duration.ofMillis(500);
 
@@ -67,6 +68,11 @@ public class Driver {
 
     public void enterText(By by, String text) {
         getElement(by).sendKeys(text);
+    }
+
+    public void enterTextAndCloseKeyboard(By by, String text) {
+        enterText(by, text);
+        getElement(by).sendKeys(Keys.RETURN);
     }
 
     public String getText(By by) {

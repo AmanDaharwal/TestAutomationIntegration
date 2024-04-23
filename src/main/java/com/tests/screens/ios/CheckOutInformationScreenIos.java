@@ -31,7 +31,7 @@ public class CheckOutInformationScreenIos extends CheckOutInformationScreen {
 
     @Override
     public CheckOutInformationScreen enterPinCode(String pinCode) {
-        driver.enterText(byPinCodeTxtBoxXpath, pinCode);
+        driver.enterTextAndCloseKeyboard(byPinCodeTxtBoxXpath, pinCode);
         return this;
     }
 
