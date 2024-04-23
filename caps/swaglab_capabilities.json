@@ -11,11 +11,27 @@
     "android": {
       "deviceName": "sdk_gphone_arm64",
       "appPath": "/src/main/resources/apps/Android_SwagLab.apk",
-      "appActivity": "com.swaglabsmobileapp.MainActivity"
+      "appActivity": "com.swaglabsmobileapp.MainActivity",
+      "browserStack": {
+        "app": "bs://da98c45a29fb67506b9af54a46020e7ecc398130",
+        "deviceName": "Google Pixel 8",
+        "platformName": "14.0",
+        "projectName": "Swag Lab Test",
+        "buildName": "bstack-android",
+        "appiumVersion": "2.5.2"
+      }
     },
     "ios": {
       "deviceName": "iPhone SE",
-      "appPath": "/src/main/resources/apps/iOS_SwagLab.app"
+      "appPath": "/src/main/resources/apps/iOS_SwagLab.app",
+      "browserStack": {
+        "app": "bs://da98c45a29fb67506b9af54a46020e7ecc398130",
+        "deviceName": "iPhone SE 2022",
+        "platformName": "15.0",
+        "projectName": "Swag Lab Test",
+        "buildName": "bstack-iOS",
+        "appiumVersion": "2.5.2"
+      }
     }
   }
 }

@@ -15,4 +15,10 @@ public class TEST_CONTEXT {
     public static final String DEVICE_NAME = "deviceName";
     public static final String APP_PATH = "appPath";
     public static final String APP_PACKAGE = "appActivity";
+    public static final String BROWSER_STACK = "browserStack";
+    public static final String APP = "app";
+    public static final String PLATFORM_NAME = "platformName";
+    public static final String PROJECT_NAME = "projectName";
+    public static final String BUILD_NAME = "buildName";
+    public static final String APPIUM_VERSION = "appiumVersion";
 }
