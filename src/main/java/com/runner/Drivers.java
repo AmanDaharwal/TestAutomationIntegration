@@ -36,7 +36,7 @@ public class Drivers {
                 BrowserDriver.quitDriver(context);
             case android:
             case ios:
-                MobileDriver.stopAppiumServer();
+                MobileDriver.stopAppiumServer(context);
         }
     }
 

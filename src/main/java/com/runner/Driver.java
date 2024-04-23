@@ -44,7 +44,7 @@ public class Driver {
         LOGGER.info("URL launched");
     }
 
-    void closeBrowser() {
+    void quitDriver() {
         this.driver.quit();
     }
 

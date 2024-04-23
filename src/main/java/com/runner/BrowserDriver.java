@@ -104,7 +104,7 @@ class BrowserDriver {
         } catch (Exception exception) {
             throw new AutomationException(exception.getMessage(), exception);
         } finally {
-            driver.closeBrowser();
+            driver.quitDriver();
         }
     }
 
