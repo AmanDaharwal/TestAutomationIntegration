@@ -25,7 +25,7 @@
       "deviceName": "iPhone SE",
       "appPath": "/src/main/resources/apps/iOS_SwagLab.app",
       "browserStack": {
-        "app": "bs://da98c45a29fb67506b9af54a46020e7ecc398130",
+        "app": "bs://062daa14a432f4a30f672b0dc6954f76db414d8f",
         "deviceName": "iPhone SE 2022",
         "platformName": "15.0",
         "projectName": "Swag Lab Test",

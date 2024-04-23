@@ -64,7 +64,26 @@ class MobileDriver {
     }
 
     private static WebDriver setUpRemoteIosDriverFor(String username, String accessKey) {
-        throw new NotImplementedException("Remote Driver NOT IMPLEMENTED FOR iOS");
+        try {
+            return new IOSDriver(
+                    new URL("https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub")
+                    , getRemoteIosOptions());
+        } catch (MalformedURLException e) {
+            throw new AutomationException("Unable to start Remote iOS Driver with exception " + e.getMessage());
+        }
+    }
+
+    private static XCUITestOptions getRemoteIosOptions() {
+        XCUITestOptions options = new XCUITestOptions();
+        String platformName = options.getPlatformName().toString().toLowerCase();
+        JSONObject browserStackCaps = MOBILE_CAPS.getJSONObject(platformName).getJSONObject(TEST_CONTEXT.BROWSER_STACK);
+        options.setApp(browserStackCaps.getString(TEST_CONTEXT.APP));
+        options.setDeviceName(browserStackCaps.getString(TEST_CONTEXT.DEVICE_NAME));
+        options.setPlatformName(browserStackCaps.getString(TEST_CONTEXT.PLATFORM_NAME));
+        options.setCapability(TEST_CONTEXT.PROJECT_NAME, browserStackCaps.getString(TEST_CONTEXT.PROJECT_NAME));
+        options.setCapability(TEST_CONTEXT.BUILD_NAME, browserStackCaps.getString(TEST_CONTEXT.BUILD_NAME));
+        options.setCapability(TEST_CONTEXT.APPIUM_VERSION, browserStackCaps.getString(TEST_CONTEXT.APPIUM_VERSION));
+        return options;
     }
 
     private static WebDriver setUpRemoteAndroidDriver(String username, String accessKey) {
