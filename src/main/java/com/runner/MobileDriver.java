@@ -4,6 +4,7 @@ import com.context.TestExecutionContext;
 import com.entities.Platform;
 import com.entities.TEST_CONTEXT;
 import com.exceptions.AutomationException;
+import com.exceptions.NotImplementedException;
 import com.exceptions.TestExecutionFailedException;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
@@ -31,13 +32,62 @@ class MobileDriver {
     private final static JSONObject MOBILE_CAPS = getMobileCapabilities();
 
     static Driver createMobileDriver(TestExecutionContext context) {
+        WebDriver innerDriver;
         Platform platform = TestRunner.getPlatform();
-        WebDriver innerDriver = setUpDriverFor(platform);
+        if (Boolean.valueOf(TestRunner.getConfig(TEST_CONTEXT.RUN_IN_CI))) {
+            innerDriver = setUpRemoteDriverFor(platform);
+        } else {
+            innerDriver = setUpDriverFor(platform);
+        }
         Driver driver = new Driver(innerDriver);
         context.addTestState(TEST_CONTEXT.INNER_DRIVER, innerDriver);
         context.addTestState(TEST_CONTEXT.DRIVER, driver);
         LOGGER.info(platform + " Driver created for test - " + context.getTestName());
         return driver;
+    }
+
+    private static WebDriver setUpRemoteDriverFor(Platform platform) {
+        String username = System.getenv("BROWSERSTACK_USERNAME");
+        String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
+        boolean flag = (username == null || username.isEmpty() || accessKey == null || accessKey.isEmpty());
+        if (flag) {
+            throw new AutomationException("Cannot create remote session. " +
+                    "BROWSERSTACK username or access key is null/empty");
+        }
+        switch (platform) {
+            case android:
+                return setUpRemoteAndroidDriver(username, accessKey);
+            case ios:
+                return setUpRemoteIosDriverFor(username, accessKey);
+        }
+        throw new AutomationException("Incorrect platform name for mobile provided as " + platform);
+    }
+
+    private static WebDriver setUpRemoteIosDriverFor(String username, String accessKey) {
+        throw new NotImplementedException("Remote Driver NOT IMPLEMENTED FOR iOS");
+    }
+
+    private static WebDriver setUpRemoteAndroidDriver(String username, String accessKey) {
+        try {
+            return new AndroidDriver(
+                    new URL("https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub")
+                    , getRemoteAndroidOptions());
+        } catch (MalformedURLException e) {
+            throw new AutomationException("Unable to start Remote Android Driver with exception " + e.getMessage());
+        }
+    }
+
+    private static UiAutomator2Options getRemoteAndroidOptions() {
+        UiAutomator2Options options = new UiAutomator2Options();
+        String platformName = options.getPlatformName().toString().toLowerCase();
+        JSONObject browserStackCaps = MOBILE_CAPS.getJSONObject(platformName).getJSONObject(TEST_CONTEXT.BROWSER_STACK);
+        options.setApp(browserStackCaps.getString(TEST_CONTEXT.APP));
+        options.setDeviceName(browserStackCaps.getString(TEST_CONTEXT.DEVICE_NAME));
+        options.setPlatformName(browserStackCaps.getString(TEST_CONTEXT.PLATFORM_NAME));
+        options.setCapability(TEST_CONTEXT.PROJECT_NAME, browserStackCaps.getString(TEST_CONTEXT.PROJECT_NAME));
+        options.setCapability(TEST_CONTEXT.BUILD_NAME, browserStackCaps.getString(TEST_CONTEXT.BUILD_NAME));
+        options.setCapability(TEST_CONTEXT.APPIUM_VERSION, browserStackCaps.getString(TEST_CONTEXT.APPIUM_VERSION));
+        return options;
     }
 
     private static WebDriver setUpDriverFor(Platform platform) {
@@ -98,7 +148,9 @@ class MobileDriver {
         }
     }
 
-    static void stopAppiumServer() {
+    static void stopAppiumServer(TestExecutionContext context) {
+        Driver driver = (Driver) context.getTestState(TEST_CONTEXT.DRIVER);
+        driver.quitDriver();
         if (appiumDriverLocalService != null && appiumDriverLocalService.isRunning()) {
             appiumDriverLocalService.stop();
         }
@@ -128,7 +180,7 @@ class MobileDriver {
             return new JSONObject(new String(Files.readAllBytes(Paths.get(capabilitiesFilePath))))
                     .getJSONObject("mobile");
         } catch (IOException e) {
-            throw new AutomationException("Unable to get remote address for mobile with exception " + e);
+            throw new AutomationException("Unable to get read mobile capabilities with exception " + e);
         }
     }
 }
