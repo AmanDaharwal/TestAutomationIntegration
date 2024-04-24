@@ -4,7 +4,6 @@ import com.context.TestExecutionContext;
 import com.entities.Platform;
 import com.entities.TEST_CONTEXT;
 import com.exceptions.AutomationException;
-import com.exceptions.NotImplementedException;
 import com.exceptions.TestExecutionFailedException;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
@@ -34,7 +33,7 @@ class MobileDriver {
     static Driver createMobileDriver(TestExecutionContext context) {
         WebDriver innerDriver;
         Platform platform = TestRunner.getPlatform();
-        if (Boolean.valueOf(TestRunner.getConfig(TEST_CONTEXT.RUN_IN_CI))) {
+        if (Boolean.parseBoolean(TestRunner.getConfig(TEST_CONTEXT.RUN_IN_CI))) {
             innerDriver = setUpRemoteDriverFor(platform);
         } else {
             innerDriver = setUpDriverFor(platform);
@@ -47,27 +46,18 @@ class MobileDriver {
     }
 
     private static WebDriver setUpRemoteDriverFor(Platform platform) {
-        String username = System.getenv("BROWSERSTACK_USERNAME");
-        String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
-        boolean flag = (username == null || username.isEmpty() || accessKey == null || accessKey.isEmpty());
-        if (flag) {
-            throw new AutomationException("Cannot create remote session. " +
-                    "BROWSERSTACK username or access key is null/empty");
-        }
         switch (platform) {
             case android:
-                return setUpRemoteAndroidDriver(username, accessKey);
+                return setUpRemoteAndroidDriver();
             case ios:
-                return setUpRemoteIosDriverFor(username, accessKey);
+                return setUpRemoteIosDriverFor();
         }
         throw new AutomationException("Incorrect platform name for mobile provided as " + platform);
     }
 
-    private static WebDriver setUpRemoteIosDriverFor(String username, String accessKey) {
+    private static WebDriver setUpRemoteIosDriverFor() {
         try {
-            return new IOSDriver(
-                    new URL("https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub")
-                    , getRemoteIosOptions());
+            return new IOSDriver(new URL(Drivers.getRemoteUrl()), getRemoteIosOptions());
         } catch (MalformedURLException e) {
             throw new AutomationException("Unable to start Remote iOS Driver with exception " + e.getMessage());
         }
@@ -86,11 +76,9 @@ class MobileDriver {
         return options;
     }
 
-    private static WebDriver setUpRemoteAndroidDriver(String username, String accessKey) {
+    private static WebDriver setUpRemoteAndroidDriver() {
         try {
-            return new AndroidDriver(
-                    new URL("https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub")
-                    , getRemoteAndroidOptions());
+            return new AndroidDriver(new URL(Drivers.getRemoteUrl()), getRemoteAndroidOptions());
         } catch (MalformedURLException e) {
             throw new AutomationException("Unable to start Remote Android Driver with exception " + e.getMessage());
         }
