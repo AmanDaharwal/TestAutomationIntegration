@@ -17,7 +17,7 @@ final class Setup {
     private final static Logger logger = LogManager.getLogger(Setup.class);
     private static String configFilePath;
     private static Properties properties;
-    private static Map<String, Object> configMap = new LinkedHashMap<>();
+    private final static Map<String, Object> configMap = new LinkedHashMap<>();
     private final static String BROWSER = "BROWSER";
     private final static String URL = "URL";
     private final static String TEST_DATA = "TEST_DATA";
@@ -25,6 +25,7 @@ final class Setup {
     private final static String CAPTURE_LOGS = "CAPTURE_LOGS";
     private static final String CAPABILITIES = "CAPS";
     private static final String RUN_IN_CI = "RUN_IN_CI";
+    private static final String RUN_IN_COULD_PLATFORM = "RUN_IN_COULD_PLATFORM";
 
     private Setup() {
 
@@ -57,6 +58,7 @@ final class Setup {
         configMap.put(CAPTURE_LOGS, properties.get(CAPTURE_LOGS));
         configMap.put(CAPABILITIES, properties.get(CAPABILITIES));
         configMap.put(RUN_IN_CI, properties.get(RUN_IN_CI));
+        configMap.put(RUN_IN_COULD_PLATFORM, properties.get(RUN_IN_COULD_PLATFORM));
         logger.info(configMap);
     }
 
