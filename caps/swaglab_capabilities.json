@@ -4,7 +4,13 @@
       "--incognito",
       "--start-maximized",
       "--disable-extensions"
-    ]
+    ],
+    "browserStack": {
+      "browser": "chrome",
+      "browserVersion": "latest",
+      "platformName": "MAC Ventura",
+      "seleniumVersion": "4.19.1"
+    }
   },
   "mobile": {
     "remoteAddress": "http://127.0.0.1:4723",
