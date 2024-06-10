@@ -109,11 +109,10 @@ class MobileDriver {
     }
 
     private static WebDriver setUpiOSDriver() {
-        try {
-            return new IOSDriver(new URL(MOBILE_CAPS.getString(TEST_CONTEXT.REMOTE_ADDRESS)), getIosOptions());
-        } catch (MalformedURLException e) {
-            throw new AutomationException("Unable to start iOS Driver with exception " + e.getMessage());
+        if (appiumDriverLocalService.isRunning()) {
+            return new IOSDriver(appiumDriverLocalService.getUrl(), getIosOptions());
         }
+        throw new AutomationException("Appium Server is not running. Please make sure to start appium server");
     }
 
     private static XCUITestOptions getIosOptions() {
@@ -126,11 +125,10 @@ class MobileDriver {
     }
 
     private static WebDriver setUpAndroidDriver() {
-        try {
-            return new AndroidDriver(new URL(MOBILE_CAPS.getString(TEST_CONTEXT.REMOTE_ADDRESS)), getAndroidOptions());
-        } catch (MalformedURLException e) {
-            throw new AutomationException("Unable to start Android Driver with exception " + e.getMessage());
+        if (appiumDriverLocalService.isRunning()) {
+            return new AndroidDriver(appiumDriverLocalService.getUrl(), getAndroidOptions());
         }
+        throw new AutomationException("Appium Server is not running. Please make sure to start appium server");
     }
 
     private static UiAutomator2Options getAndroidOptions() {
