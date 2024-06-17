@@ -71,6 +71,13 @@
             <artifactId>java-client</artifactId>
             <version>9.2.2</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.epam.reportportal/agent-java-cucumber -->
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>agent-java-cucumber6</artifactId>
+            <version>5.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>
