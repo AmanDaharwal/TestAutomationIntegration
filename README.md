@@ -1,7 +1,7 @@
 # TestAutomationIntegration
 
 The project is to implement application test automation for web, android and iOS platform.
-Test results are published using Extend Reporter
+Test results are published using Extend Reporter and Report Portal
 Sample test application taken is swag labs
 
 # Machine setup
