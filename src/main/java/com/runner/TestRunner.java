@@ -36,6 +36,7 @@ public class TestRunner {
                 "--plugin", "junit:" + cucumberReportDirectory + "/cucumber.xml",
                 "--threads", Setup.getConfig(TEST_CONTEXT.PARALLEL),
                 "--plugin", "com.listeners.CucumberPlatformScenarioListener",
+                "--plugin", "com.listeners.ReportPortalScenarioReporterListener",
                 "--glue", "com.tests.steps",
                 "src/main/resources/features"};
         try {
