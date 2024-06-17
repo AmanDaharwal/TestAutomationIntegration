@@ -4,6 +4,7 @@ import com.context.SessionContext;
 import com.context.TestExecutionContext;
 import com.reporters.ExtendTestLogger;
 import com.reporters.ExtendTestReporter;
+import com.reporters.ReportPortalReporter;
 import com.runner.Drivers;
 import io.cucumber.plugin.ConcurrentEventListener;
 import com.aventstack.extentreports.Status;
@@ -17,12 +18,14 @@ import java.util.Map;
 public class CucumberPlatformScenarioListener implements ConcurrentEventListener {
     private final static Logger LOGGER = LogManager.getLogger(CucumberPlatformScenarioListener.class);
     private final ExtendTestReporter extendTestReporter;
+    private final ReportPortalReporter reportPortalReporter;
     private final Map<String, Integer> scenarioRunCounts = new HashMap<>();
     private final String pathOfOutputDirectory = System.getProperty("OUTPUT_DIRECTORY");
 
     public CucumberPlatformScenarioListener() {
         LOGGER.info("CucumberPlatformScenarioListener");
         extendTestReporter = ExtendTestReporter.getExtendTestReporter();
+        reportPortalReporter = ReportPortalReporter.getReportPortalReporter();
     }
 
     @Override
@@ -72,10 +75,13 @@ public class CucumberPlatformScenarioListener implements ConcurrentEventListener
                 "file://" + System.getProperty("user.dir") + "//"
                 + pathOfOutputDirectory.substring(2)
                 + extendTestReporter.getExtentReportPath());
+        reportPortalReporter.printReportPortalUrl();
     }
 
     private Integer getScenarioRunCount(String scenarioName) {
         scenarioRunCounts.put(scenarioName, scenarioRunCounts.getOrDefault(scenarioName, 1));
         return scenarioRunCounts.get(scenarioName);
     }
+
+
 }
